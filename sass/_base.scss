@@ -1,0 +1,32 @@
+$container-width: 950px;
+
+$base-font-size: 12px;
+$base-line-height: 18px;
+
+$icons-spacing: 50px;
+$shadows-spacing: 50px;
+$shadows-layout: horizontal;
+
+$experimental-support-for-svg: true;
+$legacy-support-for-ie6: false;
+$legacy-support-for-ie7: false;
+
+@import "compass";
+@import "compass/reset";
+@import "icons/*.png";
+
+@mixin content-style {
+	& {
+		p, ol, ul, dl, form, table, blockquote {
+			margin-bottom:1.2em;
+		}
+	}
+}
+html {
+	overflow-y:scroll;
+	-webkit-overflow-scrolling:touch;
+}
+
+b, strong {
+	font-weight:bold;
+}
