@@ -8,6 +8,18 @@ $app->get('/', function () use ($app) {
     $app->render('home.php');
 });
 
+
+/**
+ * Strona główna
+ */
+$app->get('/o-szkolce', function () use ($app) {
+    
+    $strona = Model::factory('Strona')->where('id_strony',1)->find_one();
+    
+    $app->render('page.php',array('content'=>$strona->zawartosc, 'title'=>$strona->tytul));
+    //$app->render('o-szkolce.php');
+});
+
 $app->get('/menugen', function () use ($app) {
 
     $categories = Model::factory('Category')->order_by_asc('pos')->find_many();
@@ -29,6 +41,19 @@ $app->get('/menugen', function () use ($app) {
 
     //$app->render('home.php');
 });
+
+/**
+ * Oferta
+ */
+
+/**
+ * O firmie
+ */
+
+
+/**
+ * Kontakt
+ */
 
 /**
  * Katalog
