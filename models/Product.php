@@ -13,7 +13,7 @@ class Product extends Model{
     public static $_id_column = 'prod_id';
     
    
-    public function subcat() {
+    public function subcategory() {
         return $this->belongs_to('Subcategory', 'subcat_id'); // Note we use the model name literally - not a pluralised version
     }
 }

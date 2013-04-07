@@ -13,19 +13,22 @@ $GLOBALS['normalizeChars'] = array(
     'Ą'=>'A', 'Ć'=>'C', 'Ę'=>'E', 'Ł'=>'L', 'Ń'=>'N', 'Ó'=>'O', 'Ś'=>'S', 'Ź'=>'Z', 'Ż'=>'Z',
     'ą'=>'a', 'ć'=>'c', 'ę'=>'e', 'ł'=>'l', 'ń'=>'n', 'ó'=>'o', 'ś'=>'s', 'ź'=>'z', 'ż'=>'z'
 );
-
+ 
 function cleanForShortURL($toClean) {
     $toClean     =     str_replace('&', '-and-', $toClean);
+    $toClean = strtr($toClean, $GLOBALS['normalizeChars']);
     $toClean     =    trim(preg_replace('/[^\w\d_ -]/si', '', $toClean));//remove all illegal chars
     $toClean     =     str_replace(' ', '-', $toClean);
     $toClean     =     str_replace('--', '-', $toClean);
     
-    $string = strtr($toClean, $GLOBALS['normalizeChars']);
+   
+    
+
     
     if (function_exists('mb_strtolower')) { 
-     return mb_strtolower($string); 
+     return mb_strtolower($toClean); 
    } else { 
-     return strtolower($string); 
+     return strtolower($toClean); 
    } 
    
 }

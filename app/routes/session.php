@@ -39,24 +39,63 @@ $app->get('/katalog/:vars', function ($vars) use ($app) {
     $type = $varsArray[0]; //category, subcategory, product
     $id = intval($varsArray[1]); //type id
     
+    $cat = array();
+    $subcat = array();
+    $prod = array();    
+    
     switch ($type) {
       case 'category':
           $category = Model::factory('Category')->find_one($id);
           $list = $category->subcategories()->find_many();  
           $title = $category->name;
+
+          $cat['id'] = $category->cat_id;
+          $cat['name'] = $title;
+          $cat['clearUrl'] = cleanForShortURL($category->name);
+ 
           $render = 'productslist';
           break;
+      
        case 'subcategory':
           $subcategory = Model::factory('Subcategory')->find_one($id);           
           $list = $subcategory->products()->find_many();
           $title = $subcategory->name;
+          
+          $category = $subcategory->category()->find_one();
+          
+          $cat['id'] = $category->cat_id;
+          $cat['name'] = $category->name;
+          $cat['clearUrl'] = cleanForShortURL($category->name);
+ 
+          $subcat['id'] = $subcategory->subcat_id;
+          $subcat['name'] = $subcategory->name;
+          $subcat['clearUrl'] = cleanForShortURL($subcategory->name);
+          
           $render = 'productslist';
           break;
+      
        case 'product':
           $list = Model::factory('Product')->find_one($id);
-          $title = $products->name;
+          $title = $list->name;
+          
+          $subcategory = $list->subcategory()->find_one();
+          $category = $subcategory->category()->find_one();
+          
+          $cat['id'] = $category->cat_id;
+          $cat['name'] = $category->name;
+          $cat['clearUrl'] = cleanForShortURL($category->name);          
+ 
+          $subcat['id'] = $subcategory->subcat_id;
+          $subcat['name'] = $subcategory->name;
+          $subcat['clearUrl'] = cleanForShortURL($subcategory->name);
+          
+          $prod['id'] = $list->prod_id;
+          $prod['name'] = $list->name;
+          $prod['clearUrl'] = cleanForShortURL($list->name);
+          
           $render = 'product';
           break;
+      
        default:
           $render = 'productslist';  
           $list = array();
@@ -64,7 +103,7 @@ $app->get('/katalog/:vars', function ($vars) use ($app) {
     };
     
     
-    $app->render($render.'.php',array('list'=>$list, 'title'=>$title));
+    $app->render($render.'.php',array('list'=>$list, 'title'=>$title, 'category'=>$cat ,'subcategory'=>$subcat, 'product'=>$prod));
     
 });
 

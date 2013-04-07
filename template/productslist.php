@@ -3,7 +3,7 @@
 {% block page_title %}{{ title }}{% endblock %}
 {% block content %}
 <article>
-	<h1 class="content-header">Kategorie produktów</h1>
+	<h1 class="content-header">Kategorie produktów {% if category is not empty %}/ <a href="/hanbud/katalog/category,{{category.id}},{{category.clearUrl}}">{{category.name}}</a> {% endif %}{% if subcategory is not empty %}/ <a href="/hanbud/katalog/subcategory,{{subcategory.id}},{{subcategory.clearUrl}}">{{subcategory.name}}</a> {% endif %}{% if product is not empty %}/ <a href="/hanbud/katalog/product,{{product.id}},{{product.clearUrl}}">{{product.name}}</a> {% endif %}</h1>
 
 	<div class="content-box">
 		<ul class="products-categories">

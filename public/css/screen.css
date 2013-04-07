@@ -331,6 +331,10 @@ a:hover {
   color: white;
 }
 
+.content-header a {
+  color: white;
+}
+
 /* line 208, ../sass/screen.scss */
 .content-box {
   margin: 10px 0;

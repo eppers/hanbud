@@ -10,3 +10,39 @@ Stack trace:
 #7 D:\Program Files (x86)\wamp\www\hanbud\lib\Slim\Slim.php(1097): Slim_Middleware_PrettyExceptions->call()
 #8 D:\Program Files (x86)\wamp\www\hanbud\index.php(46): Slim->run()
 #9 {main}
+1 - 2013-04-07T14:31:56+00:00 - exception 'Twig_Error_Syntax' with message 'Unexpected token "name" of value "empty" ("end of statement block" expected) in "productslist.php" at line 6' in D:\Program Files (x86)\wamp\www\hanbud\lib\Twig\TokenStream.php:77
+Stack trace:
+#0 D:\Program Files (x86)\wamp\www\hanbud\lib\Twig\TokenParser\If.php(39): Twig_TokenStream->expect(3)
+#1 D:\Program Files (x86)\wamp\www\hanbud\lib\Twig\Parser.php(178): Twig_TokenParser_If->parse(Object(Twig_Token))
+#2 D:\Program Files (x86)\wamp\www\hanbud\lib\Twig\TokenParser\Block.php(47): Twig_Parser->subparse(Array, true)
+#3 D:\Program Files (x86)\wamp\www\hanbud\lib\Twig\Parser.php(178): Twig_TokenParser_Block->parse(Object(Twig_Token))
+#4 D:\Program Files (x86)\wamp\www\hanbud\lib\Twig\Parser.php(95): Twig_Parser->subparse(NULL, false)
+#5 D:\Program Files (x86)\wamp\www\hanbud\lib\Twig\Environment.php(486): Twig_Parser->parse(Object(Twig_TokenStream))
+#6 D:\Program Files (x86)\wamp\www\hanbud\lib\Twig\Environment.php(536): Twig_Environment->parse(Object(Twig_TokenStream))
+#7 D:\Program Files (x86)\wamp\www\hanbud\lib\Twig\Environment.php(327): Twig_Environment->compileSource('{% extends 'lay...', 'productslist.ph...')
+#8 D:\Program Files (x86)\wamp\www\hanbud\lib\Twig\Environment.php(295): Twig_Environment->loadTemplate('productslist.ph...')
+#9 D:\Program Files (x86)\wamp\www\hanbud\lib\twigView_class.php(8): Twig_Environment->render('productslist.ph...', Array)
+#10 D:\Program Files (x86)\wamp\www\hanbud\lib\Slim\View.php(144): twigView->render('productslist.ph...')
+#11 D:\Program Files (x86)\wamp\www\hanbud\lib\Slim\Slim.php(616): Slim_View->display('productslist.ph...')
+#12 D:\Program Files (x86)\wamp\www\hanbud\app\routes\session.php(96): Slim->render('productslist.ph...', Array)
+#13 [internal function]: {closure}('subcategory,1,p...')
+#14 D:\Program Files (x86)\wamp\www\hanbud\lib\Slim\Route.php(395): call_user_func_array(Object(Closure), Array)
+#15 D:\Program Files (x86)\wamp\www\hanbud\lib\Slim\Slim.php(1145): Slim_Route->dispatch()
+#16 D:\Program Files (x86)\wamp\www\hanbud\lib\Slim\Middleware\Flash.php(84): Slim->call()
+#17 D:\Program Files (x86)\wamp\www\hanbud\lib\Slim\Middleware\MethodOverride.php(91): Slim_Middleware_Flash->call()
+#18 D:\Program Files (x86)\wamp\www\hanbud\lib\Slim\Middleware\PrettyExceptions.php(65): Slim_Middleware_MethodOverride->call()
+#19 D:\Program Files (x86)\wamp\www\hanbud\lib\Slim\Slim.php(1097): Slim_Middleware_PrettyExceptions->call()
+#20 D:\Program Files (x86)\wamp\www\hanbud\index.php(46): Slim->run()
+#21 {main}
+1 - 2013-04-07T14:37:50+00:00 - exception 'ErrorException' with message 'Undefined variable: prod' in D:\Program Files (x86)\wamp\www\hanbud\app\routes\session.php:104
+Stack trace:
+#0 D:\Program Files (x86)\wamp\www\hanbud\app\routes\session.php(104): Slim::handleErrors(8, 'Undefined varia...', 'D:\Program File...', 104, Array)
+#1 [internal function]: {closure}('subcategory,1,p...')
+#2 D:\Program Files (x86)\wamp\www\hanbud\lib\Slim\Route.php(395): call_user_func_array(Object(Closure), Array)
+#3 D:\Program Files (x86)\wamp\www\hanbud\lib\Slim\Slim.php(1145): Slim_Route->dispatch()
+#4 D:\Program Files (x86)\wamp\www\hanbud\lib\Slim\Middleware\Flash.php(84): Slim->call()
+#5 D:\Program Files (x86)\wamp\www\hanbud\lib\Slim\Middleware\MethodOverride.php(91): Slim_Middleware_Flash->call()
+#6 D:\Program Files (x86)\wamp\www\hanbud\lib\Slim\Middleware\PrettyExceptions.php(65): Slim_Middleware_MethodOverride->call()
+#7 D:\Program Files (x86)\wamp\www\hanbud\lib\Slim\Slim.php(1097): Slim_Middleware_PrettyExceptions->call()
+#8 D:\Program Files (x86)\wamp\www\hanbud\index.php(46): Slim->run()
+#9 {main}
