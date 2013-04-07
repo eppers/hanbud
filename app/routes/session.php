@@ -8,12 +8,64 @@ $app->get('/', function () use ($app) {
     $app->render('home.php');
 });
 
-/*
- * Strona główna po kliknieciu w link ' Strona Główna ' 
- */
-$app->get('/home', function () use ($app) {
+$app->get('/menugen', function () use ($app) {
 
-    $app->render('home.php');
+    $categories = Model::factory('Category')->order_by_asc('pos')->find_many();
+
+    foreach($categories as $cat) {
+        if($cat instanceof Category) {
+
+            $catArray['name'] = $cat->name;
+            $catArray['id'] = $cat->cat_id;
+            $catArray['subcats'] = $cat->subcategories()->order_by_asc('pos')->find_many();
+            
+            $catArrays[] = $catArray;
+        }
+    }
+    
+    
+    $menu = new Menu();
+    $menu->generate($catArrays);
+
+    //$app->render('home.php');
+});
+
+/**
+ * Katalog
+ */
+$app->get('/katalog/:vars', function ($vars) use ($app) {
+    
+    $varsArray = explode(',',$vars);
+    $type = $varsArray[0]; //category, subcategory, product
+    $id = intval($varsArray[1]); //type id
+    
+    switch ($type) {
+      case 'category':
+          $category = Model::factory('Category')->find_one($id);
+          $list = $category->subcategories()->find_many();  
+          $title = $category->name;
+          $render = 'productslist';
+          break;
+       case 'subcategory':
+          $subcategory = Model::factory('Subcategory')->find_one($id);           
+          $list = $subcategory->products()->find_many();
+          $title = $subcategory->name;
+          $render = 'productslist';
+          break;
+       case 'product':
+          $list = Model::factory('Product')->find_one($id);
+          $title = $products->name;
+          $render = 'product';
+          break;
+       default:
+          $render = 'productslist';  
+          $list = array();
+          $title = '';
+    };
+    
+    
+    $app->render($render.'.php',array('list'=>$list, 'title'=>$title));
+    
 });
 
 $app->get('/o-szkolce', function () use ($app) {

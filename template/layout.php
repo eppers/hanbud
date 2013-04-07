@@ -6,16 +6,16 @@
 <head>
 	<meta charset="utf-8" />
 	<!--[if IE 8]><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><![endif]-->
-	<title>Han-Bud</title>
+	<title>Hanbud - {% block page_title %} {% endblock %}</title>
 	<meta name="description" content="" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<link rel="stylesheet" media="screen, projection" href="./public/css/screen.css" />
-	<script src="./public/js/vendor/modernizr-2.6.2.min.js"></script>
+	<link rel="stylesheet" media="screen, projection" href="/hanbud/public/css/screen.css" />
+	<script src="/hanbud/public/js/vendor/modernizr-2.6.2.min.js"></script>
 </head>
 <body id="top">
 	<div class="main-container">
 		<header class="main-header">
-			<a href="/" id="logo"><img src="./public/img/logo.png" alt="Han-Bud"></a>
+			<a href="/" id="logo"><img src="/hanbud/public/img/logo.png" alt="Han-Bud"></a>
 			
 			<div class="titles">
 				<p class="additional">Ogrody</p>
@@ -36,7 +36,7 @@
 		</header>
 
 		<div class="content-section">
-			<?php isset($_GET['p']) ? include($_GET['p'].'.php') : include('demo.php'); ?>
+			{% block content %} {% endblock %}
 		</div>
 
 		<div class="aside-section">
@@ -50,42 +50,8 @@
 			</section>
 
 			<nav class="content-box-1">
-				<h2>Kategorie produktów</h2>
+                            {% include 'menu.tpl.php' %}
 
-				<ul class="offer-menu" id="nested-menu">
-					<li class="level-1 active">
-						<strong>Lorem ipsum</strong>
-
-						<ul>
-							<li><a href="">Ut semper tortor vitae</a></li>
-							<li><a href="">Suspendisse a magna</a></li>
-							<li><a href="">Ut semper tortor vitae</a></li>
-							<li><a href="">Suspendisse a magna</a></li>
-						</ul>
-					</li>
-
-					<li class="level-1 active">
-						<strong>Lorem ipsum 2</strong>
-
-						<ul>
-							<li><a href="">Ut semper tortor vitae</a></li>
-							<li><a href="">Suspendisse a magna</a></li>
-							<li><a href="">Ut semper tortor vitae</a></li>
-							<li><a href="">Suspendisse a magna</a></li>
-						</ul>
-					</li>
-
-					<li class="level-1 active">
-						<strong> Lorem ipsum 3</strong>
-
-						<ul>
-							<li><a href="">Ut semper tortor vitae</a></li>
-							<li><a href="">Suspendisse a magna</a></li>
-							<li><a href="">Ut semper tortor vitae</a></li>
-							<li><a href="">Suspendisse a magna</a></li>
-						</ul>
-					</li>
-				</ul>
 			</nav>
 
 			<ul class="quick-contact light">
@@ -100,8 +66,8 @@
 	</div>
 
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-	<script>window.jQuery || document.write('<script src="./public/js/vendor/jquery-1.8.3.min.js"><\/script>')</script>
-	<script src="./public/js/plugins.js"></script>
-	<script src="./public/js/main.js"></script>
+	<script>window.jQuery || document.write('<script src="/hanbud/public/js/vendor/jquery-1.8.3.min.js"><\/script>')</script>
+	<script src="/hanbud/public/js/plugins.js"></script>
+	<script src="/hanbud/public/js/main.js"></script>
 </body>
 </html>

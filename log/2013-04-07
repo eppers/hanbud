@@ -1,0 +1,12 @@
+1 - 2013-04-07T13:57:01+00:00 - exception 'ErrorException' with message 'Undefined variable: render' in D:\Program Files (x86)\wamp\www\hanbud\app\routes\session.php:72
+Stack trace:
+#0 D:\Program Files (x86)\wamp\www\hanbud\app\routes\session.php(72): Slim::handleErrors(8, 'Undefined varia...', 'D:\Program File...', 72, Array)
+#1 [internal function]: {closure}('category,1,poro...')
+#2 D:\Program Files (x86)\wamp\www\hanbud\lib\Slim\Route.php(395): call_user_func_array(Object(Closure), Array)
+#3 D:\Program Files (x86)\wamp\www\hanbud\lib\Slim\Slim.php(1145): Slim_Route->dispatch()
+#4 D:\Program Files (x86)\wamp\www\hanbud\lib\Slim\Middleware\Flash.php(84): Slim->call()
+#5 D:\Program Files (x86)\wamp\www\hanbud\lib\Slim\Middleware\MethodOverride.php(91): Slim_Middleware_Flash->call()
+#6 D:\Program Files (x86)\wamp\www\hanbud\lib\Slim\Middleware\PrettyExceptions.php(65): Slim_Middleware_MethodOverride->call()
+#7 D:\Program Files (x86)\wamp\www\hanbud\lib\Slim\Slim.php(1097): Slim_Middleware_PrettyExceptions->call()
+#8 D:\Program Files (x86)\wamp\www\hanbud\index.php(46): Slim->run()
+#9 {main}

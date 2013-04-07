@@ -1,8 +1,8 @@
 <?php
 
-ORM::configure('mysql:host=localhost;dbname=petre_tree');
-ORM::configure('username', 'petre_tree');
-ORM::configure('password', 'bVgIjPyB');
+ORM::configure('mysql:host=localhost;dbname=hanbud');
+ORM::configure('username', 'root');
+ORM::configure('password', '');
 
 //ORM::configure('username', 'root');
 //ORM::configure('password', '');
