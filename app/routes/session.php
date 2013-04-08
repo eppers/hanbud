@@ -66,7 +66,8 @@ $app->get('/katalog/:vars', function ($vars) use ($app) {
     
     $cat = array();
     $subcat = array();
-    $prod = array();    
+    $prod = array();  
+    $link = '';
     
     switch ($type) {
       case 'category':
@@ -78,6 +79,8 @@ $app->get('/katalog/:vars', function ($vars) use ($app) {
           $cat['name'] = $title;
           $cat['clearUrl'] = cleanForShortURL($category->name);
  
+          $link = 'subcategory';
+          
           $render = 'productslist';
           break;
       
@@ -95,6 +98,8 @@ $app->get('/katalog/:vars', function ($vars) use ($app) {
           $subcat['id'] = $subcategory->subcat_id;
           $subcat['name'] = $subcategory->name;
           $subcat['clearUrl'] = cleanForShortURL($subcategory->name);
+          
+          $link = 'product';
           
           $render = 'productslist';
           break;
@@ -116,6 +121,7 @@ $app->get('/katalog/:vars', function ($vars) use ($app) {
           
           $prod['id'] = $list->prod_id;
           $prod['name'] = $list->name;
+          $prod['desc'] = $list->desc;
           $prod['clearUrl'] = cleanForShortURL($list->name);
           
           $render = 'product';
@@ -128,7 +134,7 @@ $app->get('/katalog/:vars', function ($vars) use ($app) {
     };
     
     
-    $app->render($render.'.php',array('list'=>$list, 'title'=>$title, 'category'=>$cat ,'subcategory'=>$subcat, 'product'=>$prod));
+    $app->render($render.'.php',array('list'=>$list, 'title'=>$title, 'category'=>$cat ,'subcategory'=>$subcat, 'product'=>$prod, 'link'=>$link));
     
 });
 

@@ -10,7 +10,7 @@
                     {% for category in list %}
 			<li>
 				<span class="no">{% if loop.index <= 9 %}0{{loop.index}}{% else %}{{loop.index}}{% endif %}</span>
-				<a href=""><img src="http://placehold.it/140x100" alt=""> <strong>{{category.name}}</strong></a>
+				<a href="/hanbud/katalog/{{link}},{% if category.prod_id %}{{category.prod_id}}{% elseif category.subcat_id  %}{{category.subcat_id}}{% endif %},{{category.name|cleanUrl}}"><img src="http://placehold.it/140x100" alt=""> <strong>{{category.name}}</strong></a>
 			</li>
                         {% else %}
                         Brak produktów
