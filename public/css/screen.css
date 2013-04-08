@@ -497,8 +497,9 @@ a:hover {
 
 /* Product description */
 .product-top {
-    margin: 30px 16px 0;
-    
+    margin: 18px 16px 0;
+    height: 208px;
+    overflow: hidden;
 }
 
 .product-image-container {
@@ -516,18 +517,33 @@ a:hover {
     height: 112px;
 }
 
+.product-info-container .product-title {
+    width: 217px;
+    margin:21px 0 18px;
+    text-align: center;
+}
+
 .product-name {
-    width: 216px;
+    width: 217px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
 }
 
 .product-bottom {
-    
+    margin: 34px 112px 0 16px;
 }
 
-.product-title {
-    
+.product-bottom p {
+    float: left;
 }
 
-.product-desc {
-    
+.product-bottom .product-title {
+    margin-left: 52px;
+}
+
+p.product-desc {
+    margin-left: 52px;
+    margin-top: 7px;
+    margin-bottom: 178px;
 }
