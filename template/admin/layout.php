@@ -4,24 +4,24 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>Grasston.pl  - panel administracyjny</title>
 
-        <link rel="stylesheet" href="/public/admin/css/screen.css" type="text/css" media="screen" title="default" />
+        <link rel="stylesheet" href="/hanbud/public/admin/css/screen.css" type="text/css" media="screen" title="default" />
 
-        <link href="/public/admin/css/charisma-app.css" rel="stylesheet" />
-	<link href="/public/admin/css/jquery-ui-1.8.21.custom.css" rel="stylesheet" />
-	<link href='/public/admin/css/fullcalendar.css' rel='stylesheet' />
-	<link href='/public/admin/css/fullcalendar.print.css' rel='stylesheet'  media='print' />
-	<link href='/public/admin/css/chosen.css' rel='stylesheet' />
-	<link href='/public/admin/css/uniform.default.css' rel='stylesheet' />
-	<link href='/public/admin/css/colorbox.css' rel='stylesheet' />
-	<link href='/public/admin/css/jquery.cleditor.css' rel='stylesheet' />
-	<link href='/public/admin/css/jquery.noty.css' rel='stylesheet' />
-	<link href='/public/admin/css/noty_theme_default.css' rel='stylesheet' />
-	<link href='/public/admin/css/elfinder.min.css' rel='stylesheet' />
-	<link href='/public/admin/css/elfinder.theme.css' rel='stylesheet' />
-	<link href='/public/admin/css/jquery.iphone.toggle.css' rel='stylesheet' />
-	<link href='/public/admin/css/opa-icons.css' rel='stylesheet' />
-	<link href='/public/admin/css/uploadify.css' rel='stylesheet' />
-        <link href="/public/admin/css/bootstrap-classic.css" rel="stylesheet" />
+        <link href="/hanbud/public/admin/css/charisma-app.css" rel="stylesheet" />
+	<link href="/hanbud/public/admin/css/jquery-ui-1.8.21.custom.css" rel="stylesheet" />
+	<link href='/hanbud/public/admin/css/fullcalendar.css' rel='stylesheet' />
+	<link href='/hanbud/public/admin/css/fullcalendar.print.css' rel='stylesheet'  media='print' />
+	<link href='/hanbud/public/admin/css/chosen.css' rel='stylesheet' />
+	<link href='/hanbud/public/admin/css/uniform.default.css' rel='stylesheet' />
+	<link href='/hanbud/public/admin/css/colorbox.css' rel='stylesheet' />
+	<link href='/hanbud/public/admin/css/jquery.cleditor.css' rel='stylesheet' />
+	<link href='/hanbud/public/admin/css/jquery.noty.css' rel='stylesheet' />
+	<link href='/hanbud/public/admin/css/noty_theme_default.css' rel='stylesheet' />
+	<link href='/hanbud/public/admin/css/elfinder.min.css' rel='stylesheet' />
+	<link href='/hanbud/public/admin/css/elfinder.theme.css' rel='stylesheet' />
+	<link href='/hanbud/public/admin/css/jquery.iphone.toggle.css' rel='stylesheet' />
+	<link href='/hanbud/public/admin/css/opa-icons.css' rel='stylesheet' />
+	<link href='/hanbud/public/admin/css/uploadify.css' rel='stylesheet' />
+        <link href="/hanbud/public/admin/css/bootstrap-classic.css" rel="stylesheet" />
 	<!-- The HTML5 shim, for IE6-8 support of HTML5 elements -->
 	<!--[if lt IE 9]>
 	  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -31,16 +31,16 @@
 <![endif]-->
 
 <!--  jquery core -->
-<script src="/public/admin/js/jquery-1.7.2.min.js"></script>
+<script src="/hanbud/public/admin/js/jquery-1.7.2.min.js"></script>
 
-<script src="/public/admin/js/jquery.scripts.js"></script>
+<script src="/hanbud/public/admin/js/jquery.scripts.js"></script>
 
-<script src="/public/admin/js/charisma.js"></script>
+<script src="/hanbud/public/admin/js/charisma.js"></script>
 
 <!--  checkbox styling script -->
-<script src="/public/admin/js/ui.core.js" type="text/javascript"></script>
-<script src="/public/admin/js/ui.checkbox.js" type="text/javascript"></script>
-<script src="/public/admin/js/jquery.bind.js" type="text/javascript"></script>
+<script src="/hanbud/public/admin/js/ui.core.js" type="text/javascript"></script>
+<script src="/hanbud/public/admin/js/ui.checkbox.js" type="text/javascript"></script>
+<script src="/hanbud/public/admin/js/jquery.bind.js" type="text/javascript"></script>
 <script type="text/javascript">
 $(function(){
 	$('input').checkBox();
@@ -55,7 +55,7 @@ $(function(){
 <![if !IE 7]>
 
 <!--  styled select box script version 1 -->
-<script src="/public/admin/js/jquery.selectbox-0.5.js" type="text/javascript"></script>
+<script src="/hanbud/public/admin/js/jquery.selectbox-0.5.js" type="text/javascript"></script>
 <script type="text/javascript">
 $(document).ready(function() {
 	$('.styledselect').selectbox({ inputClass: "selectbox_styled" });
@@ -66,7 +66,7 @@ $(document).ready(function() {
 <![endif]>
 
 <!--  styled select box script version 2 --> 
-<script src="/public/admin/js/jquery.selectbox-0.5_style_2.js" type="text/javascript"></script>
+<script src="/hanbud/public/admin/js/jquery.selectbox-0.5_style_2.js" type="text/javascript"></script>
 <script type="text/javascript">
 $(document).ready(function() {
 	$('.styledselect_form_1').selectbox({ inputClass: "styledselect_form_1" });
@@ -75,7 +75,7 @@ $(document).ready(function() {
 </script>
 
 <!--  styled select box script version 3 --> 
-<script src="/public/admin/js/jquery.selectbox-0.5_style_2.js" type="text/javascript"></script>
+<script src="/hanbud/public/admin/js/jquery.selectbox-0.5_style_2.js" type="text/javascript"></script>
 <script type="text/javascript">
 $(document).ready(function() {
 	$('.styledselect_pages').selectbox({ inputClass: "styledselect_pages" });
@@ -83,11 +83,11 @@ $(document).ready(function() {
 </script>
 
 <!--  styled file upload script --> 
-<script src="/public/admin/js/jquery.filestyle.js" type="text/javascript"></script>
+<script src="/hanbud/public/admin/js/jquery.filestyle.js" type="text/javascript"></script>
 <script type="text/javascript" charset="utf-8">
   $(function() {
       $("input.file_1").filestyle({ 
-          image: "/public/admin/img/forms/choose-file.gif",
+          image: "/hanbud/public/admin/img/forms/choose-file.gif",
           imageheight : 21,
           imagewidth : 78,
           width : 310
@@ -96,11 +96,11 @@ $(document).ready(function() {
 </script>
 
 <!-- Custom jquery scripts -->
-<script src="/public/admin/js/custom_jquery.js" type="text/javascript"></script>
+<script src="/hanbud/public/admin/js/custom_jquery.js" type="text/javascript"></script>
  
 <!-- Tooltips -->
-<script src="/public/admin/js/jquery.tooltip.js" type="text/javascript"></script>
-<script src="/public/admin/js/jquery.dimensions.js" type="text/javascript"></script>
+<script src="/hanbud/public/admin/js/jquery.tooltip.js" type="text/javascript"></script>
+<script src="/hanbud/public/admin/js/jquery.dimensions.js" type="text/javascript"></script>
 <script type="text/javascript">
 $(function() {
 	$('a.info-tooltip ').tooltip({
@@ -120,7 +120,7 @@ $(function() {
 
 
 <!-- MUST BE THE LAST SCRIPT IN <HEAD></HEAD></HEAD> png fix -->
-<script src="/public/admin/js/jquery.pngFix.pack.js" type="text/javascript"></script>
+<script src="/hanbud/public/admin/js/jquery.pngFix.pack.js" type="text/javascript"></script>
 <script type="text/javascript">
 $(document).ready(function(){
 
@@ -137,7 +137,7 @@ $(document).pngFix( );
 
 	<!-- start logo -->
 	<div id="logo">
-	<a href=""><img src="/public/admin/img/shared/logo.png" height="40" alt="" /></a>
+	<a href=""><img src="/hanbud/public/admin/img/shared/logo.png" height="40" alt="" /></a>
 	</div>
 	<!-- end logo -->
 	
@@ -161,9 +161,9 @@ $(document).pngFix( );
 		<div id="nav-right">
 		
 			<div class="nav-divider">&nbsp;</div>
-			<div class="showhide-account"><img src="/public/admin/img/shared/nav/nav_myaccount.gif" width="93" height="14" alt="" /></div>
+			<div class="showhide-account"><img src="/hanbud/public/admin/img/shared/nav/nav_myaccount.gif" width="93" height="14" alt="" /></div>
 			<div class="nav-divider">&nbsp;</div>
-			<a href="" id="logout"><img src="/public/admin/img/shared/nav/nav_logout.gif" width="64" height="14" alt="" /></a>
+			<a href="" id="logout"><img src="/hanbud/public/admin/img/shared/nav/nav_logout.gif" width="64" height="14" alt="" /></a>
 			<div class="clear">&nbsp;</div>
 		
 		
@@ -249,74 +249,74 @@ $(document).pngFix( );
 	<!-- Placed at the end of the document so the pages load faster -->
 
 	<!-- jQuery -->
-	<script src="/public/admin/js/jquery-1.7.2.min.js"></script>
+	<script src="/hanbud/public/admin/js/jquery-1.7.2.min.js"></script>
 	<!-- jQuery UI -->
-	<script src="/public/admin/js/jquery-ui-1.8.21.custom.min.js"></script>
+	<script src="/hanbud/public/admin/js/jquery-ui-1.8.21.custom.min.js"></script>
 	<!-- transition / effect library -->
-	<script src="/public/admin/js/bootstrap-transition.js"></script>
+	<script src="/hanbud/public/admin/js/bootstrap-transition.js"></script>
 	<!-- alert enhancer library -->
-	<script src="/public/admin/js/bootstrap-alert.js"></script>
+	<script src="/hanbud/public/admin/js/bootstrap-alert.js"></script>
 	<!-- modal / dialog library -->
-	<script src="/public/admin/js/bootstrap-modal.js"></script>
+	<script src="/hanbud/public/admin/js/bootstrap-modal.js"></script>
 	<!-- custom dropdown library -->
-	<script src="/public/admin/js/bootstrap-dropdown.js"></script>
+	<script src="/hanbud/public/admin/js/bootstrap-dropdown.js"></script>
 	<!-- scrolspy library -->
-	<script src="/public/admin/js/bootstrap-scrollspy.js"></script>
+	<script src="/hanbud/public/admin/js/bootstrap-scrollspy.js"></script>
 	<!-- library for creating tabs -->
-	<script src="/public/admin/js/bootstrap-tab.js"></script>
+	<script src="/hanbud/public/admin/js/bootstrap-tab.js"></script>
 	<!-- library for advanced tooltip -->
-	<script src="/public/admin/js/bootstrap-tooltip.js"></script>
+	<script src="/hanbud/public/admin/js/bootstrap-tooltip.js"></script>
 	<!-- popover effect library -->
-	<script src="/public/admin/js/bootstrap-popover.js"></script>
+	<script src="/hanbud/public/admin/js/bootstrap-popover.js"></script>
 	<!-- button enhancer library -->
-	<script src="/public/admin/js/bootstrap-button.js"></script>
+	<script src="/hanbud/public/admin/js/bootstrap-button.js"></script>
 	<!-- accordion library (optional, not used in demo) -->
-	<script src="/public/admin/js/bootstrap-collapse.js"></script>
+	<script src="/hanbud/public/admin/js/bootstrap-collapse.js"></script>
 	<!-- carousel slideshow library (optional, not used in demo) -->
-	<script src="/public/admin/js/bootstrap-carousel.js"></script>
+	<script src="/hanbud/public/admin/js/bootstrap-carousel.js"></script>
 	<!-- autocomplete library -->
-	<script src="/public/admin/js/bootstrap-typeahead.js"></script>
+	<script src="/hanbud/public/admin/js/bootstrap-typeahead.js"></script>
 	<!-- tour library -->
-	<script src="/public/admin/js/bootstrap-tour.js"></script>
+	<script src="/hanbud/public/admin/js/bootstrap-tour.js"></script>
 	<!-- library for cookie management -->
-	<script src="/public/admin/js/jquery.cookie.js"></script>
+	<script src="/hanbud/public/admin/js/jquery.cookie.js"></script>
 	<!-- calander plugin -->
-	<script src='/public/admin/js/fullcalendar.min.js'></script>
+	<script src='/hanbud/public/admin/js/fullcalendar.min.js'></script>
 	<!-- data table plugin -->
-	<script src='/public/admin/js/jquery.dataTables.min.js'></script>
+	<script src='/hanbud/public/admin/js/jquery.dataTables.min.js'></script>
 
 	<!-- chart libraries start -->
-	<script src="/public/admin/js/excanvas.js"></script>
-	<script src="/public/admin/js/jquery.flot.min.js"></script>
-	<script src="/public/admin/js/jquery.flot.pie.min.js"></script>
-	<script src="/public/admin/js/jquery.flot.stack.js"></script>
-	<script src="/public/admin/js/jquery.flot.resize.min.js"></script>
+	<script src="/hanbud/public/admin/js/excanvas.js"></script>
+	<script src="/hanbud/public/admin/js/jquery.flot.min.js"></script>
+	<script src="/hanbud/public/admin/js/jquery.flot.pie.min.js"></script>
+	<script src="/hanbud/public/admin/js/jquery.flot.stack.js"></script>
+	<script src="/hanbud/public/admin/js/jquery.flot.resize.min.js"></script>
 	<!-- chart libraries end -->
 
 	<!-- select or dropdown enhancer -->
-	<script src="/public/admin/js/jquery.chosen.min.js"></script>
+	<script src="/hanbud/public/admin/js/jquery.chosen.min.js"></script>
 	<!-- checkbox, radio, and file input styler -->
-	<script src="/public/admin/js/jquery.uniform.min.js"></script>
+	<script src="/hanbud/public/admin/js/jquery.uniform.min.js"></script>
 	<!-- plugin for gallery image view -->
-	<script src="/public/admin/js/jquery.colorbox.min.js"></script>
+	<script src="/hanbud/public/admin/js/jquery.colorbox.min.js"></script>
 	<!-- rich text editor library -->
-	<script src="/public/admin/js/jquery.cleditor.min.js"></script>
+	<script src="/hanbud/public/admin/js/jquery.cleditor.min.js"></script>
 	<!-- notification plugin -->
-	<script src="/public/admin/js/jquery.noty.js"></script>
+	<script src="/hanbud/public/admin/js/jquery.noty.js"></script>
 	<!-- file manager library -->
-	<script src="/public/admin/js/jquery.elfinder.min.js"></script>
+	<script src="/hanbud/public/admin/js/jquery.elfinder.min.js"></script>
 	<!-- star rating plugin -->
-	<script src="/public/admin/js/jquery.raty.min.js"></script>
+	<script src="/hanbud/public/admin/js/jquery.raty.min.js"></script>
 	<!-- for iOS style toggle switch -->
-	<script src="/public/admin/js/jquery.iphone.toggle.js"></script>
+	<script src="/hanbud/public/admin/js/jquery.iphone.toggle.js"></script>
 	<!-- autogrowing textarea plugin -->
-	<script src="/public/admin/js/jquery.autogrow-textarea.js"></script>
+	<script src="/hanbud/public/admin/js/jquery.autogrow-textarea.js"></script>
 	<!-- multiple file upload plugin -->
-	<script src="/public/admin/js/jquery.uploadify-3.1.min.js"></script>
+	<script src="/hanbud/public/admin/js/jquery.uploadify-3.1.min.js"></script>
 	<!-- history.js for cross-browser state change on ajax -->
-	<script src="/public/admin/js/jquery.history.js"></script>
+	<script src="/hanbud/public/admin/js/jquery.history.js"></script>
 	<!-- application script for Charisma demo -->
-	<script src="/public/admin/js/charisma.js"></script>
+	<script src="/hanbud/public/admin/js/charisma.js"></script>
         
 </body>
 </html>

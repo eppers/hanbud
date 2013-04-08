@@ -40,7 +40,6 @@ $admin = new Admin();
 $admin->app=$app;
 
 require './app/routes/session.php';
-require './app/routes/user.php';
 require './app/routes/admin.php';
 
 $app->run();

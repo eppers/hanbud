@@ -7,36 +7,30 @@
  */
 
 $app->get('/admin/', function () use ($app) {
-    $app->redirect('/admin/strony/view');
+    $app->redirect('/hanbud/admin/catalog/category/all');
 });
 
 
 /*
- * Strony ......................................................................
+ * Categories ......................................................................
  */
 
-$app->get('/admin/strony/view', function () use ($admin) {
-    $sites=Model::factory('Strona')->find_many();
-    $admin->render('/sites/all.php',array('sites'=>$sites));
+$app->get('/admin/catalog/category/all', function () use ($admin) {
+    $categories=Model::factory('Category')->find_many();
+    $admin->render('/category/list.php',array('categories'=>$categories));
 });
 
-$app->post('/admin/strony/view', function () use ($admin) {
-    $sites=Model::factory('Strona')->find_many();
-    $admin->render('/sites/all.php',array('sites'=>$sites));    
-});
 
 /*
- * Edycja stronę
+ * Edit category
  */
-$app->get('/admin/strony/edytuj/:id', function ($id) use ($admin) {
+$app->get('/admin/catalog/category/edit/:id', function ($id) use ($admin) {
  
-    $site=Model::factory('Strona')->find_one($id);
+    $category=Model::factory('Category')->find_one($id);
     
-    if($site instanceof Strona) {
-        $title=$site->tytul;
-        $content=$site->zawartosc;
+    if($category instanceof Category) {
 
-        $admin->render('/sites/view.php',array('title'=>$title,'content'=>$content, 'id'=>$id));
+        $admin->render('/category/add.php',array('category'=>$category, 'form'=>'edit'));
     }
     //else $admin->redirect('/admin/sites/view');
 });
