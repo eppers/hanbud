@@ -12,6 +12,7 @@ class Subcategory extends Model{
     public static $_table = 'subcategories';
     public static $_id_column = 'subcat_id';
     
+    protected static $_workspace = '/public/img/producers/';
     
     public function category() {
         return $this->belongs_to('Category', 'cat_id');
@@ -21,6 +22,5 @@ class Subcategory extends Model{
         return $this->has_many('Product', 'subcat_id'); // Note we use the model name literally - not a pluralised version
     }
    
-
 }
 ?>

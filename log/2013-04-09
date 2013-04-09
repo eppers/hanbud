@@ -1,0 +1,75 @@
+1 - 2013-04-09T09:18:29+00:00 - exception 'PDOException' with message 'SQLSTATE[42000] [1049] Unknown database 'hanbud'' in E:\wamp\www\hanbud\lib\Paris\idiorm.php:186
+Stack trace:
+#0 E:\wamp\www\hanbud\lib\Paris\idiorm.php(186): PDO->__construct('mysql:host=loca...', 'root', '', Array)
+#1 E:\wamp\www\hanbud\lib\Paris\paris.php(91): ORM::_setup_db()
+#2 E:\wamp\www\hanbud\lib\Paris\paris.php(229): ORMWrapper::for_table('subcategory')
+#3 E:\wamp\www\hanbud\app\routes\session.php(82): Model::factory('Subcategory')
+#4 [internal function]: {closure}('subcategory,1,p...')
+#5 E:\wamp\www\hanbud\lib\Slim\Route.php(395): call_user_func_array(Object(Closure), Array)
+#6 E:\wamp\www\hanbud\lib\Slim\Slim.php(1145): Slim_Route->dispatch()
+#7 E:\wamp\www\hanbud\lib\Slim\Middleware\Flash.php(84): Slim->call()
+#8 E:\wamp\www\hanbud\lib\Slim\Middleware\MethodOverride.php(91): Slim_Middleware_Flash->call()
+#9 E:\wamp\www\hanbud\lib\Slim\Middleware\PrettyExceptions.php(65): Slim_Middleware_MethodOverride->call()
+#10 E:\wamp\www\hanbud\lib\Slim\Slim.php(1097): Slim_Middleware_PrettyExceptions->call()
+#11 E:\wamp\www\hanbud\index.php(40): Slim->run()
+#12 {main}
+1 - 2013-04-09T09:22:53+00:00 - exception 'PDOException' with message 'SQLSTATE[42S02]: Base table or view not found: 1146 Table 'hanbud.subcategory' doesn't exist' in E:\wamp\www\hanbud\lib\Paris\idiorm.php:980
+Stack trace:
+#0 E:\wamp\www\hanbud\lib\Paris\idiorm.php(980): PDOStatement->execute(Array)
+#1 E:\wamp\www\hanbud\lib\Paris\idiorm.php(376): ORM->_run()
+#2 E:\wamp\www\hanbud\lib\Paris\paris.php(115): ORM->find_one(1)
+#3 E:\wamp\www\hanbud\app\routes\session.php(82): ORMWrapper->find_one(1)
+#4 [internal function]: {closure}('subcategory,1,p...')
+#5 E:\wamp\www\hanbud\lib\Slim\Route.php(395): call_user_func_array(Object(Closure), Array)
+#6 E:\wamp\www\hanbud\lib\Slim\Slim.php(1145): Slim_Route->dispatch()
+#7 E:\wamp\www\hanbud\lib\Slim\Middleware\Flash.php(84): Slim->call()
+#8 E:\wamp\www\hanbud\lib\Slim\Middleware\MethodOverride.php(91): Slim_Middleware_Flash->call()
+#9 E:\wamp\www\hanbud\lib\Slim\Middleware\PrettyExceptions.php(65): Slim_Middleware_MethodOverride->call()
+#10 E:\wamp\www\hanbud\lib\Slim\Slim.php(1097): Slim_Middleware_PrettyExceptions->call()
+#11 E:\wamp\www\hanbud\index.php(40): Slim->run()
+#12 {main}
+1 - 2013-04-09T09:23:15+00:00 - exception 'PDOException' with message 'SQLSTATE[42S02]: Base table or view not found: 1146 Table 'hanbud.subcategory' doesn't exist' in E:\wamp\www\hanbud\lib\Paris\idiorm.php:980
+Stack trace:
+#0 E:\wamp\www\hanbud\lib\Paris\idiorm.php(980): PDOStatement->execute(Array)
+#1 E:\wamp\www\hanbud\lib\Paris\idiorm.php(376): ORM->_run()
+#2 E:\wamp\www\hanbud\lib\Paris\paris.php(115): ORM->find_one(1)
+#3 E:\wamp\www\hanbud\app\routes\session.php(82): ORMWrapper->find_one(1)
+#4 [internal function]: {closure}('subcategory,1,p...')
+#5 E:\wamp\www\hanbud\lib\Slim\Route.php(395): call_user_func_array(Object(Closure), Array)
+#6 E:\wamp\www\hanbud\lib\Slim\Slim.php(1145): Slim_Route->dispatch()
+#7 E:\wamp\www\hanbud\lib\Slim\Middleware\Flash.php(84): Slim->call()
+#8 E:\wamp\www\hanbud\lib\Slim\Middleware\MethodOverride.php(91): Slim_Middleware_Flash->call()
+#9 E:\wamp\www\hanbud\lib\Slim\Middleware\PrettyExceptions.php(65): Slim_Middleware_MethodOverride->call()
+#10 E:\wamp\www\hanbud\lib\Slim\Slim.php(1097): Slim_Middleware_PrettyExceptions->call()
+#11 E:\wamp\www\hanbud\index.php(40): Slim->run()
+#12 {main}
+1 - 2013-04-09T09:23:42+00:00 - exception 'PDOException' with message 'SQLSTATE[42S02]: Base table or view not found: 1146 Table 'hanbud.subcategory' doesn't exist' in E:\wamp\www\hanbud\lib\Paris\idiorm.php:980
+Stack trace:
+#0 E:\wamp\www\hanbud\lib\Paris\idiorm.php(980): PDOStatement->execute(Array)
+#1 E:\wamp\www\hanbud\lib\Paris\idiorm.php(376): ORM->_run()
+#2 E:\wamp\www\hanbud\lib\Paris\paris.php(115): ORM->find_one(1)
+#3 E:\wamp\www\hanbud\app\routes\session.php(82): ORMWrapper->find_one(1)
+#4 [internal function]: {closure}('subcategory,1,p...')
+#5 E:\wamp\www\hanbud\lib\Slim\Route.php(395): call_user_func_array(Object(Closure), Array)
+#6 E:\wamp\www\hanbud\lib\Slim\Slim.php(1145): Slim_Route->dispatch()
+#7 E:\wamp\www\hanbud\lib\Slim\Middleware\Flash.php(84): Slim->call()
+#8 E:\wamp\www\hanbud\lib\Slim\Middleware\MethodOverride.php(91): Slim_Middleware_Flash->call()
+#9 E:\wamp\www\hanbud\lib\Slim\Middleware\PrettyExceptions.php(65): Slim_Middleware_MethodOverride->call()
+#10 E:\wamp\www\hanbud\lib\Slim\Slim.php(1097): Slim_Middleware_PrettyExceptions->call()
+#11 E:\wamp\www\hanbud\index.php(40): Slim->run()
+#12 {main}
+1 - 2013-04-09T09:23:44+00:00 - exception 'PDOException' with message 'SQLSTATE[42S02]: Base table or view not found: 1146 Table 'hanbud.subcategory' doesn't exist' in E:\wamp\www\hanbud\lib\Paris\idiorm.php:980
+Stack trace:
+#0 E:\wamp\www\hanbud\lib\Paris\idiorm.php(980): PDOStatement->execute(Array)
+#1 E:\wamp\www\hanbud\lib\Paris\idiorm.php(376): ORM->_run()
+#2 E:\wamp\www\hanbud\lib\Paris\paris.php(115): ORM->find_one(1)
+#3 E:\wamp\www\hanbud\app\routes\session.php(82): ORMWrapper->find_one(1)
+#4 [internal function]: {closure}('subcategory,1,p...')
+#5 E:\wamp\www\hanbud\lib\Slim\Route.php(395): call_user_func_array(Object(Closure), Array)
+#6 E:\wamp\www\hanbud\lib\Slim\Slim.php(1145): Slim_Route->dispatch()
+#7 E:\wamp\www\hanbud\lib\Slim\Middleware\Flash.php(84): Slim->call()
+#8 E:\wamp\www\hanbud\lib\Slim\Middleware\MethodOverride.php(91): Slim_Middleware_Flash->call()
+#9 E:\wamp\www\hanbud\lib\Slim\Middleware\PrettyExceptions.php(65): Slim_Middleware_MethodOverride->call()
+#10 E:\wamp\www\hanbud\lib\Slim\Slim.php(1097): Slim_Middleware_PrettyExceptions->call()
+#11 E:\wamp\www\hanbud\index.php(40): Slim->run()
+#12 {main}

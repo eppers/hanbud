@@ -5,7 +5,7 @@ class Image {
     /*
      * Creats images
      */
-     static public function setImage($_FILES, $WORKSPACE, $thumb=false, $category=false) {
+     static public function setImage($_FILES, $WORKSPACE, $thumb=false, $params=array()) {
         
         $typeAllowed = array('jpg', 'png', 'gif', 'jpeg');  
        
@@ -88,7 +88,7 @@ class Image {
                         exit('Zły typ pliku: '.$imageinfo['mime']);
                 }
                 
-                self::resizer($image,$new_upload,false,$category);
+                self::resizer($image,$new_upload,$params);
                 
                 
                 if($thumb) {
@@ -108,7 +108,7 @@ class Image {
                                 exit('Zły typ pliku: '.$imageinfo['mime']);
                         }
                         
-                    self::resizer($image,$new_thumb,true);
+                    self::resizer($image,$new_thumb);
                 }
                 
             
@@ -131,22 +131,17 @@ class Image {
     /*
      * Resizes images
      */
-    static public function resizer($image,$file_name, $thumb=false, $category=false) {
+    static public function resizer($image, $file_name, $params = array()) {
         
-        if($thumb) {
-            $max_width = 300;
-            $max_height = 150;
+        if(empty($params)) {
+            $max_width = 140;
+            $max_height = 100;
         } else {
         // Target dimensions
-            $max_width = 800;
-            $max_height = 800;
+            $max_width = $params['width'];
+            $max_height = $params['height'];
         }
-        
-        if($category) {
-            $max_width = 91;
-            $max_height = 92;
-        }
-        
+                
         // Get current dimensions
         $old_width  = imagesx($image);
         $old_height = imagesy($image);
