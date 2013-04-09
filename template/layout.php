@@ -9,13 +9,13 @@
 	<title>Hanbud - {% block page_title %} {% endblock %}</title>
 	<meta name="description" content="" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<link rel="stylesheet" media="screen, projection" href="/hanbud/public/css/screen.css" />
-	<script src="/hanbud/public/js/vendor/modernizr-2.6.2.min.js"></script>
+	<link rel="stylesheet" media="screen, projection" href="/public/css/screen.css" />
+	<script src="/public/js/vendor/modernizr-2.6.2.min.js"></script>
 </head>
 <body id="top">
 	<div class="main-container">
 		<header class="main-header">
-			<a href="/" id="logo"><img src="/hanbud/public/img/logo.png" alt="Han-Bud"></a>
+			<a href="/" id="logo"><img src="/public/img/logo.png" alt="Han-Bud"></a>
 			
 			<div class="titles">
 				<p class="additional">Ogrody</p>
@@ -66,8 +66,8 @@
 	</div>
 
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-	<script>window.jQuery || document.write('<script src="/hanbud/public/js/vendor/jquery-1.8.3.min.js"><\/script>')</script>
-	<script src="/hanbud/public/js/plugins.js"></script>
-	<script src="/hanbud/public/js/main.js"></script>
+	<script>window.jQuery || document.write('<script src="/public/js/vendor/jquery-1.8.3.min.js"><\/script>')</script>
+	<script src="/public/js/plugins.js"></script>
+	<script src="/public/js/main.js"></script>
 </body>
 </html>

@@ -8,11 +8,11 @@
 	<div class="content-box">
             <div class="product-top">
                 <div class="product-image-container">
-                    <img src="/hanbud/public/img/product_img.jpg" alt="">
+                    <img src="/public/img/product_img.jpg" alt="">
                 </div>
                 <div class="product-info-container">
                     <div class="producent-logo">
-                        <img src="/hanbud/public/img/product_producent.jpg" alt="">
+                        <img src="/public/img/product_producent.jpg" alt="">
                     </div>
                     <p class="product-title">Nazwa produktu:</p>
                     <h2 class="product-name">{{product.name}}</h2>

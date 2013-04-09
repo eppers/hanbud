@@ -1,6 +1,6 @@
 {% extends 'layout.php' %}
 
-{% block page_title %}Internet przewody{% endblock %}
+{% block page_title %}Lista stron{% endblock %}
 {% block content %} 
 <!-- start content-outer ........................................................................................................................START -->
 <div id="content-outer">
@@ -9,7 +9,7 @@
 
 	<!--  start page-heading -->
 	<div id="page-heading">
-		<h1>Lista stron</h1>
+		<h1>Producenci</h1>
 	</div>
 	<!-- end page-heading -->
 
@@ -36,23 +36,24 @@
 				<table border="0" width="100%" cellpadding="0" cellspacing="0" id="product-table">
 				<tr>
 					<th class="table-header-check"><a id="toggle-all" ></a> </th>
-					<th class="table-header-repeat line-left minwidth-1"><a href="">Id slide</a></th>
-					<th class="table-header-repeat line-left minwidth-1"><a href="">Link</a></th>
-                                        <th class="table-header-repeat line-left minwidth-1"><a href="">Nazwa obrazka</a></th>
-                                        <th class="table-header-options line-left"><a href="">Options</a></th>
+					<th class="table-header-repeat line-left minwidth-1"><a href="">Nazwa producenta</a></th>
+					<th class="table-header-repeat line-left minwidth-1"><a href="">Logo</a></th>
+                                        <th class="table-header-repeat line-left minwidth-1"><a href="">Pozycja</a></th>
+                                        <th class="table-header-options line-left"><a href="">Opcje</a></th>
 				</tr>
-                           {% for slide in slider %}
+                           {% for producer in subcategories %}
 				<tr {% if loop.index is divisibleby(2) %} class="alternate-row" {% endif %} >
 					<td><input  type="checkbox"/></td>
-					<td>{{ slide.id_slider }}</td>
-					<td>{{ slide.link }}</td>
-                                        <td>{{ slide.img }}</td>
+					<td>{{ producer.name }}</td>
+                                        <td>{% if producer.url is not empty %}<img src="/public/img/producer/thumbs/{{ producer.url }}"{% endif %}</td>
+					<td>{{ producer.pos }}</td>
 					<td class="options-width">
-					<a href="/admin/slider/edit/{{ slide.id_slider }}" title="Edit" class="icon-1 info-tooltip"></a>
+					<a href="/admin/catalog/producer/edit/{{ producer.subcat_id }}" title="Edit" class="icon-1 info-tooltip"></a>
+                                        <a href="/admin/catalog/producer/delete/{{ category.cat_id }}" title="Delete" class="icon-2 info-tooltip"></a>
 					</td>
 				</tr>
                         {% else %}  
-                            <tr><td><p>Brak stron</p></td><td>{{test}}</td></tr>
+                            <tr><td><p>Brak producentów</p></td></tr>
                         {% endfor %}
 
 				
@@ -61,29 +62,6 @@
 				</form>
 			</div>
 			<!--  end content-table  -->
-		
-	
-			<!--  start paging..................................................... -->
-			<table border="0" cellpadding="0" cellspacing="0" id="paging-table">
-			<tr>
-			<td>
-				<a href="" class="page-far-left"></a>
-				<a href="" class="page-left"></a>
-				<div id="page-info">Page <strong>1</strong> / 15</div>
-				<a href="" class="page-right"></a>
-				<a href="" class="page-far-right"></a>
-			</td>
-			<td>
-			<select  class="styledselect_pages">
-				<option value="">Number of rows</option>
-				<option value="">1</option>
-				<option value="">2</option>
-				<option value="">3</option>
-			</select>
-			</td>
-			</tr>
-			</table>
-			<!--  end paging................ -->
 			
 			<div class="clear"></div>
 		 

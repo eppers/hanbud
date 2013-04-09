@@ -1,13 +1,13 @@
 <?php
  
 /*
- * TODO: zarzadzanie galerią
- * Usuwanie produktow, rodzajow, grup, uslug
+ * TODO: obrazek dodać w przypadku braku loga producenta (subkategorie)
+ * 
  * 
  */
 
 $app->get('/admin/', function () use ($app) {
-    $app->redirect('/hanbud/admin/catalog/category/all');
+    $app->redirect('/admin/catalog/category/all');
 });
 
 
@@ -20,6 +20,26 @@ $app->get('/admin/catalog/category/all', function () use ($admin) {
     $admin->render('/category/list.php',array('categories'=>$categories));
 });
 
+/**
+ * Add category
+ */
+
+$app->get('/admin/catalog/category/add', function () use ($admin) {
+ 
+    $admin->render('/category/edit.php',array('form'=>'add'));
+    
+});
+
+$app->post('/admin/catalog/category/add', function () use ($admin) {
+
+    $category = Model::factory('Category')->create();
+    $category->name   = $admin->app->request()->post('name');
+    $category->pos  = $admin->app->request()->post('pos');
+    $category->save();
+
+    $admin->render('/category/edit.php', array('category'=>$category, 'form'=>'add', 'error'=>$error));
+});
+
 
 /*
  * Edit category
@@ -30,7 +50,7 @@ $app->get('/admin/catalog/category/edit/:id', function ($id) use ($admin) {
     
     if($category instanceof Category) {
 
-        $admin->render('/category/add.php',array('category'=>$category, 'form'=>'edit'));
+        $admin->render('/category/edit.php',array('category'=>$category, 'form'=>'edit'));
     }
     else $admin->redirect('/admin/catalog/category/all');
 });
@@ -77,7 +97,7 @@ $app->get('/admin/catalog/producer/all', function () use ($admin) {
 });
 
 /*
- * Drzewka - dodaj grupę
+ * Add producer
  */
 $app->get('/admin/catalog/producer/add', function () use ($admin) {
     
@@ -121,12 +141,12 @@ $app->post('/admin/catalog/producer/add', function () use ($admin) {
 });
 
 /*
- * Subcategory - edit
+ * Producer - edit
  */
 $app->get('/admin/catalog/producer/edit/:id', function ($id) use ($admin) {
     $subcategory=Model::factory('Subcategory')->find_one($id);
     //edycja obrazkow
-    $admin->render('/subcategory/edit.php',array('subcategory'=>$subcategory, 'form'=>'edit'));
+    $admin->render('/subcategory/edit.php',array('producer'=>$subcategory, 'form'=>'edit'));
 });
 
 $app->post('/admin/catalog/producer/edit/:id', function ($id) use ($admin) {
@@ -166,7 +186,7 @@ $app->post('/admin/catalog/producer/edit/:id', function ($id) use ($admin) {
         $error['msg']='Coś poszło nie tak. Spróbuj ponownie.';
     }
     
-    $admin->render('/subcategory/edit.php', array('subcategory'=>$subcategory, 'form'=>'edit', 'error'=>$error));
+    $admin->render('/subcategory/edit.php', array('producer'=>$subcategory, 'form'=>'edit', 'error'=>$error));
 
 });
 
@@ -204,27 +224,28 @@ $app->get('/admin/catalog/producer/delete/:id', function ($id) use ($admin) {
  * ----------------------------------- Products ----------------------------------
  * View product
  */
-$app->get('/admin/catalog/product/', function () use ($admin) {
-    $tabProdukty = array();
+$app->get('/admin/catalog/product/all', function () use ($admin) {
+    $tabList = array();
     
-    $produkt = Model::factory('Product')->find_one($id);
+    $producers = Model::factory('Subcategory')->find_many();
     
-    foreach($grupy as $grupa) {
+    foreach($producers as $producer) {
         
-        if($grupa instanceof CennikDrzewkaGrupa) {
+        if($producer instanceof Subcategory) {
 
-            $produkty = $grupa->produkt()->order_by_asc('pozycja')->find_many();
+            $products = $producer->products()->order_by_asc('pos')->find_many();
             
-            foreach( $produkty as $produkt ) {
-                if($produkt instanceof CennikDrzewkaProdukt) {
+            foreach( $products as $product ) {
+                if($product instanceof Product) {
                             
-                    $tabTemp['nazwa_produktu']=$produkt->nazwa;
-                    $tabTemp['pozycja_produktu']=$produkt->pozycja;
-                    $tabTemp['id_prod']=$produkt->id_cennik_drzewka_produkty;
-                    $tabTemp['nazwa_grupy'] = $grupa->nazwa;
-                    $tabTemp['id_gr'] = $grupa->id_cennik_drzewka_grupy;
+                    $tabTemp['product_name']=$product->name;
+                    $tabTemp['product_pos']=$product->pos;
+                    $tabTemp['product_img']=$product->img;
+                    $tabTemp['product_id']=$product->prod_id;
+                    $tabTemp['producer_name'] = $producer->name;
+                    $tabTemp['producer_id'] = $producer->subcat_id;
 
-                    $tabCennik[]=$tabTemp;
+                    $tabList[]=$tabTemp;
                   
                 }
                 
@@ -233,9 +254,7 @@ $app->get('/admin/catalog/product/', function () use ($admin) {
         }
     }
 
-
-
-    $admin->render('/subcategory/edit.php',array('produkt'=>$produkt));
+    $admin->render('/product/list.php',array('products'=>$tabList));
 });
 
 
