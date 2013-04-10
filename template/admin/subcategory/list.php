@@ -1,6 +1,6 @@
 {% extends 'layout.php' %}
 
-{% block page_title %}Lista stron{% endblock %}
+{% block page_title %}producenci{% endblock %}
 {% block content %} 
 <!-- start content-outer ........................................................................................................................START -->
 <div id="content-outer">

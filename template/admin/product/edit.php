@@ -1,5 +1,5 @@
 {% extends 'layout.php' %}
-{% block page_title %}edytuj producenta{% endblock %}
+{% block page_title %}edytuj produkt{% endblock %}
 {% block content %} 
 <!-- start content-outer -->
 <div id="content-outer">
@@ -7,7 +7,7 @@
 <div id="content">
 
 
-<div id="page-heading"><h1>{% if form=='edit' %}Edytuj{% else %}Dodaj{% endif %} producenta</h1></div>
+<div id="page-heading"><h1>{% if form=='edit' %}Edytuj{% else %}Dodaj{% endif %} produkt</h1></div>
 
 
 <table border="0" width="100%" cellpadding="0" cellspacing="0" id="content-table">
@@ -31,17 +31,17 @@
             {% include 'error.php' %}
         {% endif %}
 		<!-- start id-form -->
-   <form name="site-form" action="{% if form=='edit' %}/admin/catalog/producer/edit/{{category.cat_id}} {% else %} /admin/catalog/producer/add {% endif %}" method="post" enctype="multipart/form-data">        
+   <form name="site-form" action="{% if form=='edit' %}/admin/catalog/product/edit/{{category.cat_id}} {% else %} /admin/catalog/product/add {% endif %}" method="post" enctype="multipart/form-data">        
        
        
         <table border="0" cellpadding="0" cellspacing="0"  id="id-form">
                 <tr>
-                    <th valign="top">Kategoria:</th>
+                    <th valign="top">Producent:</th>
                     <td>
                         <div class="control-group">
-                            <select id="selectError" data-rel="chosen" name="cat_id">
-                                    {% for category in categories %}
-                                    <option value="{{ producer.subcat_id }}" {% if category.cat_id==producer.cat_id %} selected {% endif %} >{{ category.nazwa }}</option>
+                            <select id="selectError" data-rel="chosen" name="producer_id">
+                                    {% for producer in producers %}
+                                    <option value="{{ producer.subcat_id }}" {% if producer.subcat_id==product.subcat_id %} selected {% endif %} >{{ producer.nazwa }}</option>
                                     {% endfor %}
                             </select>
                         </div>
@@ -49,17 +49,17 @@
                 </tr>	
                 <tr>
                     <th valign="top">Nazwa:</th>
-                    <td><input type="text" name="name" class="inp-form" value="{{producer.name}}"/></td>
+                    <td><input type="text" name="name" class="inp-form" value="{{product.name}}"/></td>
                     <td></td>
                 </tr>
                 <tr>
                     <th valign="top">Pozycja:</th>
-                    <td><input type="text" name="pos" class="inp-form" value="{{producer.pos}}"/></td>
+                    <td><input type="text" name="pos" class="inp-form" value="{{product.pos}}"/></td>
                     <td></td>
                 </tr>
                  <tr>
                     <th valign="top">Obrazek:</th>
-                    <td><input type="text" name="img" class="inp-form" value="{{producer.img}}"/></td>
+                    <td><input type="text" name="img" class="inp-form" value="{{product.img}}"/></td>
                     <td style="display: block"><a href="#" title="Pliki 2MB, jpeg, png, gif." id="upload-file-enable" class="btn btn-danger">Wybierz nowy obrazek</a></td>
                 </tr>
                 <tr id="upload-file">

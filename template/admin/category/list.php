@@ -1,12 +1,15 @@
 {% extends 'layout.php' %}
 
-{% block page_title %}Lista kategorii{% endblock %}
+{% block page_title %}kategorie{% endblock %}
 {% block content %} 
 <!-- start content-outer ........................................................................................................................START -->
 <div id="content-outer">
 <!-- start content -->
 <div id="content">
-
+        {% if session.msg is not empty %}
+            {% include 'error.php' %}
+        {% endif %}
+        
 	<!--  start page-heading -->
 	<div id="page-heading">
 		<h1>Kategorie produktów</h1>
@@ -82,5 +85,6 @@
 <!--  end content -->
 <div class="clear">&nbsp;</div>
 </div>
+
 <!--  end content-outer........................................................END -->
 {% endblock %}

@@ -1,6 +1,6 @@
 {% extends 'layout.php' %}
 
-{% block page_title %}Internet przewody{% endblock %}
+{% block page_title %}produkty{% endblock %}
 {% block content %} 
 <!-- start content-outer ........................................................................................................................START -->
 <div id="content-outer">

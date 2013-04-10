@@ -18,6 +18,8 @@ $app->get('/admin/', function () use ($app) {
 $app->get('/admin/catalog/category/all', function () use ($admin) {
     $categories=Model::factory('Category')->find_many();
     $admin->render('/category/list.php',array('categories'=>$categories));
+    
+    $_SESSION['msg'] = '';
 });
 
 /**
@@ -27,6 +29,7 @@ $app->get('/admin/catalog/category/all', function () use ($admin) {
 $app->get('/admin/catalog/category/add', function () use ($admin) {
  
     $admin->render('/category/edit.php',array('form'=>'add'));
+
     
 });
 
@@ -37,7 +40,12 @@ $app->post('/admin/catalog/category/add', function () use ($admin) {
     $category->pos  = $admin->app->request()->post('pos');
     $category->save();
 
-    $admin->render('/category/edit.php', array('category'=>$category, 'form'=>'add', 'error'=>$error));
+    $_SESSION['status']='0';
+    $_SESSION['msg']='Kategoria została wyedytowana poprawnie';
+        
+        
+    $admin->app->redirect('/admin/catalog/category/all');
+    
 });
 
 
@@ -58,42 +66,65 @@ $app->get('/admin/catalog/category/edit/:id', function ($id) use ($admin) {
 $app->post('/admin/catalog/category/edit/:id', function ($id) use ($admin) {
 
     $category=Model::factory('Category')->find_one($id);
+    
     if($category instanceof Category) {
+        
         $category->name   = $admin->app->request()->post('name');
         $category->pos  = $admin->app->request()->post('pos');
         $category->save();
 
-        $error['status']='0';
-        $error['msg']='Kategoria została wyedytowana poprawnie';
+        $_SESSION['status']='0';
+        $_SESSION['msg']='Kategoria została wyedytowana poprawnie';
+        
+        
+        $admin->app->redirect('/admin/catalog/category/all');
         
     }
     else {
-        $error['status']='1';
-        $error['msg']='Kategoria nie została wyedytowana. Spróbuj ponownie';
+        $_SESSION['status']='1';
+        $_SESSION['msg']='Kategoria nie została wyedytowana. Spróbuj ponownie';
+        
+        $admin->render('/category/edit.php', array('category'=>$category));
     }
   
-    $admin->render('/category/edit.php', array('category'=>$category, 'error'=>$error));
+    
 });
 
 /*
- * Usuwanie strony
+ * Category delete
  */
 $app->post('/admin/catalog/category/delete/:id', function ($id) use ($admin) {
-    $data = array(
-       'heading' => 'Moja dane edytuj',
-       'message' => 'To sa moje dane do edycji.'
-   );
-    $admin->render('admin/sites/view.php',$data);
+
+    $category=Model::factory('Category')->find_one($id);
+    
+    if($category instanceof Category) {
+
+        $category->delete();
+
+        $_SESSION['status']='0';
+        $_SESSION['msg']='Kategoria została skasowana poprawnie';
+
+    } else {
+        
+        $_SESSION['status']='1';
+        $_SESSION['msg']='Coś poszło nie tak';
+    }
+    
+    $admin->app->redirect('/admin/catalog/category/all');
+    
 });
 
 
 /*
  * ----------------------------------- PRODUCER (SUBCATEGORY) ----------------------------------
- * View list
+ * Producer - view list
  */
 $app->get('/admin/catalog/producer/all', function () use ($admin) {
+    
     $subcategories=Model::factory('Subcategory')->find_many();
+    
     $admin->render('/subcategory/list.php',array('subcategories'=>$subcategories));
+    $_SESSION['msg'] = '';
 });
 
 /*
@@ -101,7 +132,9 @@ $app->get('/admin/catalog/producer/all', function () use ($admin) {
  */
 $app->get('/admin/catalog/producer/add', function () use ($admin) {
     
-    $admin->render('/subcategory/edit.php',array('form'=>'add'));
+    $categories = Model::factory('Category')->find_many();
+    
+    $admin->render('/subcategory/edit.php',array('categories'=>$categories, 'form'=>'add'));
 });
 
 $app->post('/admin/catalog/producer/add', function () use ($admin) {
@@ -110,34 +143,50 @@ $app->post('/admin/catalog/producer/add', function () use ($admin) {
     $subcategory->cat_id   = $admin->app->request()->post('cat_id');
     $subcategory->name   = $admin->app->request()->post('nazwa');
     $subcategory->pos  = $admin->app->request()->post('pos');
+
+    $category = Model::factory('Category')->find_one($admin->app->request()->post('cat_id'));
     
-    if (isset($_FILES['file'])) {
+    
+    if($category instanceof Category) {
+    
+        if (isset($_FILES['file'])) {
 
-        $error = Image::setImage($_FILES, $subcategory::$_workspace, true, array());
+            $error = Image::setImage($_FILES, $subcategory::$_workspace, true, array('width'=>250, 'height'=>112));
 
-        if($error['status']==1) {
-                $admin->render('/subcategory/edit.php', array('subcategory'=>$subcategory, 'form'=>'add', 'error'=>$error));
-            exit();
+            if($error['status']==1) {
+
+                    $categories = Model::factory('Category')->find_many();
+                
+                    $admin->render('/subcategory/edit.php', array('catagories'=>$categories, 'subcategory'=>$subcategory, 'form'=>'add', 'error'=>$error));
+                exit();
+            } else {
+
+            $subcategory->img  = $_SESSION['uploaded_file'];
+            $subcategory->save();
+            $_SESSION['status']='0';
+            $_SESSION['msg']='Producent został dodany pomyślnie';
+
+            $admin->app->redirect('/admin/catalog/producer/all');
+            }
+
         } else {
 
-
-        $subcategory->img  = $error['uploaded_file'];
-        $subcategory->save();
-        $error['status']='0';
-        $error['msg']='Producent został dodany pomyślnie';
+        $error['status']='1';
+        $error['msg']='Producent nie został utworzony';
+        $categories = Model::factory('Category')->find_many();
         
+        $admin->render('/subcategory/edit.php', array('catagories'=>$categories, 'subcategory'=>$subcategory, 'form'=>'add', 'error'=>$error));
         }
-
+        
     } else {
-
-    $error['status']='1';
-    $error['msg']='Producent nie został utworzony';
-
+        
+        $error['status']='1';
+        $error['msg']='Producent nie został utworzony';
+        $categories = Model::factory('Category')->find_many();
+        
+        $admin->render('/subcategory/edit.php', array('catagories'=>$categories, 'subcategory'=>$subcategory, 'form'=>'add', 'error'=>$error));
     }
     
-
-    $admin->render('/subcategory/edit.php', array('subcategory'=>$subcategory, 'form'=>'add', 'error'=>$error));
-
 });
 
 /*
@@ -145,24 +194,28 @@ $app->post('/admin/catalog/producer/add', function () use ($admin) {
  */
 $app->get('/admin/catalog/producer/edit/:id', function ($id) use ($admin) {
     $subcategory=Model::factory('Subcategory')->find_one($id);
-    //edycja obrazkow
-    $admin->render('/subcategory/edit.php',array('producer'=>$subcategory, 'form'=>'edit'));
+    $categories=Model::factory('Category')->find_many();
+
+    $admin->render('/subcategory/edit.php',array('categories'=>$categories, 'producer'=>$subcategory, 'form'=>'edit'));
 });
 
 $app->post('/admin/catalog/producer/edit/:id', function ($id) use ($admin) {
 
     $subcategory=Model::factory('Subcategory')->find_one($id);
+    $categories=Model::factory('Category')->find_many();
     
     if($subcategory instanceof Subcategory) {
+        
+        $subcategory->cat_id =  $admin->app->request()->post('cat_id');
         $subcategory->name =  $admin->app->request()->post('name');
         $subcategory->pos =  $admin->app->request()->post('pos');
            
             if (isset($_FILES['file'])) {
 
-                $error = $subcategory->setImage($_FILES);
+                $error = Image::setImage($_FILES, $subcategory::$_workspace, true, array('width'=>250, 'height'=>112));
 
                 if($error['status']==1) {
-                        $admin->render('/drzewka/cennik_kategorie_edycja.php', array('subcategory'=>$subcategory, 'form'=>'edit', 'error'=>$error));
+                        $admin->render('/subcategory/edit.php', array('categories'=>$categories, 'producer'=>$subcategory, 'form'=>'edit', 'error'=>$error));
                     exit();
                 } else {
 
@@ -177,8 +230,10 @@ $app->post('/admin/catalog/producer/edit/:id', function ($id) use ($admin) {
             
                 $subcategory->save();
 
-                $error['status']='0';
-                $error['msg']='Producent został wyedytowany poprawnie';
+                $_SESSION['status']='0';
+                $_SESSION['msg']='Producent został wyedytowany poprawnie';
+                
+                $admin->app->redirect('/admin/catalog/producer/all');
             
         
     } else {
@@ -186,12 +241,12 @@ $app->post('/admin/catalog/producer/edit/:id', function ($id) use ($admin) {
         $error['msg']='Coś poszło nie tak. Spróbuj ponownie.';
     }
     
-    $admin->render('/subcategory/edit.php', array('producer'=>$subcategory, 'form'=>'edit', 'error'=>$error));
+    $admin->render('/subcategory/edit.php', array('categories'=>$categories, 'producer'=>$subcategory, 'form'=>'edit', 'error'=>$error));
 
 });
 
 /*
- * Subcategory - delete
+ * Producer - delete
  */
 
 $app->get('/admin/catalog/producer/delete/:id', function ($id) use ($admin) {
@@ -204,8 +259,10 @@ $app->get('/admin/catalog/producer/delete/:id', function ($id) use ($admin) {
         if($remove) {
             $subcategory->delete();
 
-            $error['status']='0';
-            $error['msg']='Producent został skasowany poprawnie';
+            $_SESSION['status']='0';
+            $_SESSION['msg']='Producent został skasowany poprawnie';
+            
+            $admin->app->redirect('/admin/catalog/producer/all');
 
         } else {
             $error['status']='1';
@@ -255,118 +312,148 @@ $app->get('/admin/catalog/product/all', function () use ($admin) {
     }
 
     $admin->render('/product/list.php',array('products'=>$tabList));
+    
+    $_SESSION['msg'] = '';
 });
 
 
 /*
- * Drzewka - dodaj rodzaj
+ * Product add
  */
-$app->get('/admin/drzewka/rodzaj/dodaj', function () use ($admin) {
+$app->get('/admin/catalog/product/add', function () use ($admin) {
     
-    $grupy=Model::factory('CennikDrzewkaGrupa')->find_many();
+    $producers=Model::factory('Subcategory')->find_many();
 
-    $admin->render('/drzewka/cennik_rodzaj_edycja.php',array('grupy'=>$grupy, 'form'=>'add'));
+    $admin->render('/product/edit.php',array('producers'=>$producers, 'form'=>'add'));
 });
 
-$app->post('/admin/drzewka/rodzaj/dodaj', function () use ($admin) {
+$app->post('/admin/catalog/product/add', function () use ($admin) {
         
-    $grupa=Model::factory('CennikDrzewkaGrupa')->find_one($admin->app->request()->post('idGr'));
+    $producer=Model::factory('Subcategory')->find_one($admin->app->request()->post('producer_id'));
+    $producers=Model::factory('Subcategory')->find_many();
     
-    $grupy=Model::factory('CennikDrzewkaGrupa')->find_many();
-    
-       
-    if($grupa instanceof CennikDrzewkaGrupa) {
-            $produkt = Model::factory('CennikDrzewkaProdukt')->create();
-            $produkt->id_cennik_drzewka_grupy =  $admin->app->request()->post('idGr');
-            $produkt->nazwa =  $admin->app->request()->post('nazwa');
-            $produkt->pozycja =  $admin->app->request()->post('pozycja');
+    if($producer instanceof Subcategory) {
+            $product = Model::factory('Product')->create();
+            $product->subcat_id =  $admin->app->request()->post('producer_id');
+            $product->name =  $admin->app->request()->post('name');
+            $product->pos =  $admin->app->request()->post('pos');
             
-            $produkt->save();
-            $error['status']='0';
-            $error['msg']='Rodzaj został dodany pomyślnie';
+            if (isset($_FILES['file'])) {
+
+                $error = Image::setImage($_FILES, $subcategory::$_workspace, true, array('width'=>284, 'height'=>203));
+
+                if($error['status']==1) {
+                        $admin->render('/product/edit.php', array('producers'=>$producers, 'form'=>'edit', 'error'=>$error));
+                    exit();
+                } else {
+
+                $product->img  = $error['uploaded_file'];
+
+                }
+
+            } else {
+
+                $product->img  = $admin->app->request()->post('img');
+            }
+            
+            $product->save();
+            $_SESSION['status']='0';
+            $_SESSION['msg']='Rodzaj został dodany pomyślnie';
+            
+            $admin->app->redirect('/admin/catalog/product/all');
+            
     } else {
         $error['status']='1';
         $error['msg']='Coś poszło nie tak. Spróbuj ponownie.';
             
-        $admin->render('/drzewka/cennik_rodzaj_edycja.php', array('grupy'=>$grupy, 'form'=>'add', 'error'=>$error));
+        $admin->render('/product/edit.php', array('producers'=>$producers, 'form'=>'add', 'error'=>$error));
         exit();
     }
-    
-    $produkt->id_cennik_drzewka_produkty=$produkt->id();
-    
-
-    $admin->render('/drzewka/cennik_rodzaj_edycja.php', array('grupy'=>$grupy, 'produkt'=>$produkt, 'form'=>'edit', 'error'=>$error));
+  
 
 });
 
 
 /*
- * Drzewka - edytuj rodzaj
+ * Product edit
  */
-$app->get('/admin/drzewka/rodzaj/edytuj/:id', function ($id) use ($admin) {
-    $produkt=Model::factory('CennikDrzewkaProdukt')->find_one($id);
-    $grupy=Model::factory('CennikDrzewkaGrupa')->find_many();
+$app->get('/admin/catalog/product/edit/:id', function ($id) use ($admin) {
+    
+    $product=Model::factory('Product')->find_one($id);
+    $producers=Model::factory('Subcategory')->find_many();
 
-    $admin->render('/drzewka/cennik_rodzaj_edycja.php',array('grupy'=>$grupy, 'produkt'=>$produkt, 'form'=>'edit'));
+    $admin->render('/product/edit.php',array('producers'=>$producers, 'product'=>$product, 'form'=>'edit'));
 });
 
-$app->post('/admin/drzewka/rodzaj/edytuj/:id', function ($id) use ($admin) {
+$app->post('/admin/catalog/product/edit/:id', function ($id) use ($admin) {
 
-    $produkt=Model::factory('CennikDrzewkaProdukt')->find_one($id);
-    $grupa=$produkt->grupa()->find_one();
+    $produkt=Model::factory('Product')->find_one($id);
     
-    $grupy=Model::factory('CennikDrzewkaGrupa')->find_many();
+    $producers=Model::factory('Subcategory')->find_many();
  
         
     
-    if($produkt instanceof CennikDrzewkaProdukt) {
-        $produkt->id_cennik_drzewka_grupy =  $admin->app->request()->post('idGr');
-        $produkt->nazwa =  $admin->app->request()->post('nazwa');
-        $produkt->pozycja =  $admin->app->request()->post('pozycja');
+    if($product instanceof Product) {
         
-        if($grupa instanceof CennikDrzewkaGrupa) {
-            
-                $produkt->save();
+        $product->subcat_id =  $admin->app->request()->post('producer_id');
+        $product->name =  $admin->app->request()->post('name');
+        $product->pos =  $admin->app->request()->post('pos');
+        
+                   
+            if (isset($_FILES['file'])) {
 
-                $error['status']='0';
-                $error['msg']='Rodzaj został wyedytowany poprawie';
+                $error = Image::setImage($_FILES, $subcategory::$_workspace, true, array('width'=>284, 'height'=>203));
+
+                if($error['status']==1) {
+                        $admin->render('/product/edit.php', array('producers'=>$producers, 'product'=>$product, 'form'=>'edit', 'error'=>$error));
+                    exit();
+                } else {
+
+                $product->img  = $error['uploaded_file'];
+
+                }
+
+            } else {
+
+                $product->img  = $admin->app->request()->post('img');
+            }
             
-        } else {
-            $error['status']='1';
-            $error['msg']='Coß poszło nie tak. Spróbuj ponownie.';
-        }
+                $product->save();
+
+                $_SESSION['status']='0';
+                $_SESSION['msg']='Produkt został wyedytowany poprawie';
+                
+                $admin->app->redirect('/admin/catalog/product/all');
+            
         
     } else {
         $error['status']='1';
         $error['msg']='Coś poszło nie tak. Spróbuj ponownie.';
     }
     
-    $admin->render('/drzewka/cennik_rodzaj_edycja.php', array('grupy'=>$grupy, 'produkt'=>$produkt, 'form'=>'edit', 'error'=>$error));
+    $admin->render('/product/edit.php', array('producers'=>$producers, 'product'=>$product, 'form'=>'edit', 'error'=>$error));
 
 });
 
 /*
- * Drzewka usuwanie rodzaju
+ * Product delete
  */
-$app->get('/admin/drzewka/rodzaj/usun/:id', function ($id) use ($admin) {
+$app->get('/admin/catalog/product/delete/:id', function ($id) use ($admin) {
     
-    $grupy=Model::factory('CennikDrzewkaGrupa')->find_many();
-    $produkt=Model::factory('CennikDrzewkaProdukt')->find_one($id);
+    $produkt=Model::factory('Product')->find_one($id);
     
-    if($produkt instanceof CennikDrzewkaProdukt) {
-        $produkt->delete();
+    if($product instanceof Product) {
+        $product->delete();
         
-        $error['status']='0';
-        $error['msg']='Rodzaj zostało skasowany poprawnie';
+        $_SESSION['status']='0';
+        $_SESSION['msg']='Produkt został skasowany poprawnie';
         
-        $admin->render('/drzewka/cennik_rodzaj_edycja.php',array('grupy'=>$grupy, 'form'=>'add', 'error'=>$error));
-        exit();
     } else {
-        $error['status']='1';
-        $error['msg']='Coś poszło nie tak';
+        $_SESSION['status']='1';
+        $_SESSION['msg']='Coś poszło nie tak';
     }
     
-    $admin->render('/drzewka/cennik_rodzaj_edycja.php',array('grupy'=>$grupy, 'form'=>'add', 'error'=>$error));
+    $admin->app->redirect('/admin/catalog/product/all');
 });
 
 

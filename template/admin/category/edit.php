@@ -1,5 +1,5 @@
 {% extends 'layout.php' %}
-
+{% block page_title %}edytuj kategorię{% endblock %}
 {% block content %} 
 <!-- start content-outer -->
 <div id="content-outer">
@@ -37,12 +37,12 @@
         <table border="0" cellpadding="0" cellspacing="0"  id="id-form">
                 <tr>
                     <th valign="top">Nazwa:</th>
-                    <td><input type="text" name="nazwa" class="inp-form" value="{{category.name}}"/></td>
+                    <td><input type="text" name="name" class="inp-form" value="{{category.name}}"/></td>
                     <td></td>
                 </tr>
                 <tr>
                     <th valign="top">Pozycja:</th>
-                    <td><input type="text" name="pozycja" class="inp-form" value="{{category.pos}}"/></td>
+                    <td><input type="text" name="pos" class="inp-form" value="{{category.pos}}"/></td>
                     <td></td>
                 </tr>	
                 <tr>
