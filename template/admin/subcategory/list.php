@@ -6,13 +6,15 @@
 <div id="content-outer">
 <!-- start content -->
 <div id="content">
-
+        {% if session.msg is not empty %}
+            {% include 'error.php' %}
+        {% endif %}
 	<!--  start page-heading -->
 	<div id="page-heading">
 		<h1>Producenci</h1>
 	</div>
 	<!-- end page-heading -->
-
+        <a href="/admin/catalog/producer/add" id="add-program" class="btn btn-large btn-primary">Dodaj producenta</a>
 	<table border="0" width="100%" cellpadding="0" cellspacing="0" id="content-table">
 	<tr>
 		<th rowspan="3" class="sized"><img src="/public/admin/img/shared/side_shadowleft.jpg" width="20" height="300" alt="" /></th>

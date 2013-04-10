@@ -6,7 +6,9 @@
 <div id="content-outer">
 <!-- start content -->
 <div id="content">
-
+        {% if session.msg is not empty %}
+            {% include 'error.php' %}
+        {% endif %}
 	<!--  start page-heading -->
 	<div id="page-heading">
 		<h1>Produkty</h1>
@@ -36,8 +38,8 @@
 				<table border="0" width="100%" cellpadding="0" cellspacing="0" id="product-table">
 				<tr>
 					<th class="table-header-check"><a id="toggle-all" ></a> </th>
-					<th class="table-header-repeat line-left minwidth-1"><a href="">Nazwa producenta</a></th>
 					<th class="table-header-repeat line-left minwidth-1"><a href="">Nazwa produktu</a></th>
+					<th class="table-header-repeat line-left minwidth-1"><a href="">Nazwa producenta</a></th>
                                         <th class="table-header-repeat line-left minwidth-1"><a href="">Produkt</a></th>
                                         <th class="table-header-repeat line-left minwidth-1"><a href="">Pozycja produktu</a></th>
                                         <th class="table-header-options line-left"><a href="">Options</a></th>
@@ -45,9 +47,9 @@
                            {% for product in products %}
 				<tr {% if loop.index is divisibleby(2) %} class="alternate-row" {% endif %} >
 					<td><input  type="checkbox"/></td>
-					<td>{{ product.producer_name }}</td>
 					<td>{{ product.product_name }}</td>
-                                        <td>{{ product.product_img }}</td>
+                                        <td>{{ product.producer_name }}</td>
+                                        <td><img src='/public/img/products/thumbs/{{ product.product_img }}' alt='{{product.product_name|cleanUrl}}'></td>
                                         <td>{{ product.product_pos }}</td>
 					<td class="options-width">
 					<a href="/admin/catalog/product/edit/{{ product.product_id }}" title="Edit" class="icon-1 info-tooltip"></a>

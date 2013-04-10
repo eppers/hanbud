@@ -31,7 +31,7 @@
             {% include 'error.php' %}
         {% endif %}
 		<!-- start id-form -->
-   <form name="site-form" action="{% if form=='edit' %}/admin/catalog/producer/edit/{{category.cat_id}} {% else %} /admin/catalog/producer/add {% endif %}" method="post" enctype="multipart/form-data">        
+   <form name="site-form" action="{% if form=='edit' %}/admin/catalog/producer/edit/{{producer.subcat_id}} {% else %} /admin/catalog/producer/add {% endif %}" method="post" enctype="multipart/form-data">        
        
        
         <table border="0" cellpadding="0" cellspacing="0"  id="id-form">
@@ -41,7 +41,7 @@
                         <div class="control-group">
                             <select id="selectError" data-rel="chosen" name="cat_id">
                                     {% for category in categories %}
-                                    <option value="{{ producer.subcat_id }}" {% if category.cat_id==producer.cat_id %} selected {% endif %} >{{ category.nazwa }}</option>
+                                    <option value="{{ category.cat_id }}" {% if category.cat_id==producer.cat_id %} selected {% endif %} >{{ category.name }}</option>
                                     {% endfor %}
                             </select>
                         </div>

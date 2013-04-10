@@ -5,7 +5,7 @@ class Image {
     /*
      * Creats images
      */
-     static public function setImage($_FILES, $WORKSPACE, $thumb=false, $params=array()) {
+     static public function setImage($_FILES, $WORKSPACE, $thumb=false, $params = array()) {
         
         $typeAllowed = array('jpg', 'png', 'gif', 'jpeg');  
        
@@ -22,15 +22,16 @@ class Image {
         $valid_chars_regex = 'A-Za-z0-9śćżźółąęń\-\s';
 
 
-
         try {
 
 
     // Jeżeli katalog z ID danej galerii nie istnieje, to zostaje utworzony        
             if (!file_exists($WORKSPACE)) {
-                @mkdir($WORKSPACE, 0777);
+                //mkdir('/home/petre/domains/petre.pl/public_html/hanbud/public/img/products', 0777);
+                if(!mkdir($WORKSPACE, 0777)) throw new Exception('Folder nie został utworzony');
+                
             };
-            
+
             if($thumb && !file_exists($thumbsWORKSPACE)) {
                 @mkdir($thumbsWORKSPACE, 0777);
             }
@@ -87,11 +88,11 @@ class Image {
                     default:
                         exit('Zły typ pliku: '.$imageinfo['mime']);
                 }
-                
-                self::resizer($image,$new_upload,$params);
-                
+
+                self::resizer($image,$new_upload, $params);
                 
                 if($thumb) {
+                    echo 'jest thumb';
                     $new_thumb = $thumbsWORKSPACE.$file_name;
                     switch(strtolower($imageinfo['mime']))
                         {
@@ -141,7 +142,9 @@ class Image {
             $max_width = $params['width'];
             $max_height = $params['height'];
         }
-                
+        
+     
+        
         // Get current dimensions
         $old_width  = imagesx($image);
         $old_height = imagesy($image);
@@ -157,18 +160,20 @@ class Image {
         $new = imagecreatetruecolor($new_width, $new_height);
 
         // Resize old image into new
-        imagecopyresampled($new, $image, 
+        if(!imagecopyresampled($new, $image, 
             0, 0, 0, 0, 
-            $new_width, $new_height, $old_width, $old_height);
+            $new_width, $new_height, $old_width, $old_height)) throw new Exception('imagecopyresampled');
             
          // Catch the imagedata
         ob_start();
-        imagejpeg($new, $file_name, 90);
+
+         imagejpeg($new, $file_name, 90);
         $data = ob_get_clean();
         
         // Destroy resources
-        imagedestroy($image);
-        imagedestroy($new);
+        if(!imagedestroy($image)) throw new Exception('destroyer');
+        if(!imagedestroy($new)) throw new Exception('destroyer2');
+
      }
      
      /*

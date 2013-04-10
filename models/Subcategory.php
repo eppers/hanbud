@@ -12,7 +12,7 @@ class Subcategory extends Model{
     public static $_table = 'subcategories';
     public static $_id_column = 'subcat_id';
     
-    protected static $_workspace = '/public/img/producers/';
+    public static $_workspace = './public/img/producers/';
     
     public function category() {
         return $this->belongs_to('Category', 'cat_id');

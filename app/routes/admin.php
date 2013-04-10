@@ -284,7 +284,7 @@ $app->get('/admin/catalog/producer/delete/:id', function ($id) use ($admin) {
 $app->get('/admin/catalog/product/all', function () use ($admin) {
     $tabList = array();
     
-    $producers = Model::factory('Subcategory')->find_many();
+    $producers = Model::factory('Subcategory')->order_by_asc('pos')->find_many();
     
     foreach($producers as $producer) {
         
@@ -387,7 +387,7 @@ $app->get('/admin/catalog/product/edit/:id', function ($id) use ($admin) {
 
 $app->post('/admin/catalog/product/edit/:id', function ($id) use ($admin) {
 
-    $produkt=Model::factory('Product')->find_one($id);
+    $product=Model::factory('Product')->find_one($id);
     
     $producers=Model::factory('Subcategory')->find_many();
  
@@ -402,7 +402,7 @@ $app->post('/admin/catalog/product/edit/:id', function ($id) use ($admin) {
                    
             if (isset($_FILES['file'])) {
 
-                $error = Image::setImage($_FILES, $subcategory::$_workspace, true, array('width'=>284, 'height'=>203));
+                $error = Image::setImage($_FILES, $product::$_workspace, true, array('width'=>284, 'height'=>203));
 
                 if($error['status']==1) {
                         $admin->render('/product/edit.php', array('producers'=>$producers, 'product'=>$product, 'form'=>'edit', 'error'=>$error));
@@ -431,7 +431,7 @@ $app->post('/admin/catalog/product/edit/:id', function ($id) use ($admin) {
         $error['msg']='Coś poszło nie tak. Spróbuj ponownie.';
     }
     
-    $admin->render('/product/edit.php', array('producers'=>$producers, 'product'=>$product, 'form'=>'edit', 'error'=>$error));
+ //   $admin->render('/product/edit.php', array('producers'=>$producers, 'product'=>$product, 'form'=>'edit', 'error'=>$error));
 
 });
 
@@ -457,268 +457,6 @@ $app->get('/admin/catalog/product/delete/:id', function ($id) use ($admin) {
 });
 
 
-
-/*
- * ----------------------------------- CENY (PRODUKTY) ----------------------------------
- * Drzewka - lista produktów
- */
-$app->get('/admin/drzewka/lista', function () use ($admin) {
-    $tabCennik = array();
-    $tabGrupy = array();
-    $tabProdukty = array();
-    $tabCeny = array();
-    
-    $grupy = Model::factory('CennikDrzewkaGrupa')->order_by_asc('pozycja')->find_many();
-    
-    foreach($grupy as $grupa) {
-        
-        if($grupa instanceof CennikDrzewkaGrupa) {
-
-            $produkty = $grupa->produkt()->order_by_asc('pozycja')->find_many();
-            
-            foreach( $produkty as $produkt ) {
-                if($produkt instanceof CennikDrzewkaProdukt) {
-                            
-                    $ceny = $produkt->cena()->order_by_asc('pozycja')->find_many();
-                  //   print_r($tabProdukty['nazwa']);
-                    foreach($ceny as $cena){
-                        if($cena instanceof CennikDrzewkaCena) {
-                          
-                              $tabTemp['id_cena']=$cena->id_cennik_drzewka_ceny;
-                              $tabTemp['wysokosc'] = $cena->wysokosc;
-                              $tabTemp['rozmiar'] = $cena->rozmiar;
-                              $tabTemp['cena'] = $cena->cena;
-                              $tabTemp['nazwa_produktu']=$produkt->nazwa;
-                              $tabTemp['pozycja_produktu']=$produkt->pozycja;
-                              $tabTemp['pozycja_cena']=$cena->pozycja;
-                              $tabTemp['id_prod']=$produkt->id_cennik_drzewka_produkty;
-                              $tabTemp['nazwa_grupy'] = $grupa->nazwa;
-                              $tabTemp['id_gr'] = $grupa->id_cennik_drzewka_grupy;
-                              
-                              $tabCennik[]=$tabTemp;
-                              
-                        }
-                        
-                    }
-                   
-                  
-                }
-                
-            }
-            
-        }
-    }
-
-
-
-    $admin->render('/drzewka/cennik_lista.php',array('cennik'=>$tabCennik));
-});
-/*
- * Drzewka - edytuj produkt
- */
-$app->get('/admin/drzewka/produkt/edytuj/:id', function ($id) use ($admin) {
-    $cena=Model::factory('CennikDrzewkaCena')->find_one($id);
-    $produkt=$cena->produkt()->find_one();
-    
-    $produkty=Model::factory('CennikDrzewkaProdukt')->find_many();
-
-    $admin->render('/drzewka/cennik_edycja.php',array('produkty'=>$produkty, 'cena'=>$cena, 'form'=>'edit'));
-});
-
-
-/*
- * Drzewka edycja POST
- */
-$app->post('/admin/drzewka/produkt/edytuj/:id', function ($id) use ($admin) {
-
-    $cena=Model::factory('CennikDrzewkaCena')->find_one($id);
-    $produkt=$cena->produkt()->find_one();
-    
-    $produkty=Model::factory('CennikDrzewkaProdukt')->find_many();
- 
-        
-    
-    if($cena instanceof CennikDrzewkaCena) {
-        $cena->id_cennik_drzewka_produkty =  $admin->app->request()->post('idProd');
-        $cena->wysokosc =  $admin->app->request()->post('wysokosc');
-        $cena->rozmiar =  $admin->app->request()->post('rozmiar');
-        $cena->cena =  $admin->app->request()->post('cena');
-        $cena->pozycja =  $admin->app->request()->post('pozycja');
-        
-        if($produkt instanceof CennikDrzewkaProdukt) {
-            
-                $cena->save();
-
-                $error['status']='0';
-                $error['msg']='Produkt został wyedytowany poprawie';
-            
-        } else {
-            $error['status']='1';
-            $error['msg']='Coß poszło nie tak. Spróbuj ponownie.';
-        }
-        
-    } else {
-        $error['status']='1';
-        $error['msg']='Coß poszło nie tak. Spróbuj ponownie.';
-    }
-    
-    $admin->render('/drzewka/cennik_edycja.php', array('produkty'=>$produkty, 'cena'=>$cena, 'form'=>'edit', 'error'=>$error));
-
-});
-
-
-/*
- * Drzewka dodawanie ceny do produktu (rodzaju)
- */
-$app->get('/admin/drzewka/produkt/dodaj', function () use ($admin) {
-    
-    $produkty=Model::factory('CennikDrzewkaProdukt')->find_many();
-
-    $admin->render('/drzewka/cennik_edycja.php',array('produkty'=>$produkty, 'form'=>'add'));
-});
-
-$app->post('/admin/drzewka/produkt/dodaj', function () use ($admin) {
-        
-    $produkt=Model::factory('CennikDrzewkaProdukt')->find_one($admin->app->request()->post('idProd'));
-    
-    $produkty=Model::factory('CennikDrzewkaProdukt')->find_many();
-    
-       
-    if($produkt instanceof CennikDrzewkaProdukt) {
-            $cena = Model::factory('CennikDrzewkaCena')->create();
-            $cena->id_cennik_drzewka_produkty =  $admin->app->request()->post('idProd');
-            $cena->wysokosc =  $admin->app->request()->post('wysokosc');
-            $cena->rozmiar =  $admin->app->request()->post('rozmiar');
-            $cena->cena =  $admin->app->request()->post('cena');
-            $cena->pozycja =  $admin->app->request()->post('pozycja');
-            
-            $cena->save();
-            $error['status']='0';
-            $error['msg']='Produkt został dodany pomyślnie';
-    } else {
-        $error['status']='1';
-        $error['msg']='Coś poszło nie tak. Spróbuj ponownie.';
-            
-        $admin->render('/drzewka/cennik_edycja.php', array('produkty'=>$produkty, 'form'=>'add', 'error'=>$error));
-        exit();
-    }
-    
-    $cena->id_cennik_drzewka_ceny=$cena->id();
-    
-
-    $admin->render('/drzewka/cennik_edycja.php', array('produkty'=>$produkty, 'cena'=>$cena, 'form'=>'edit', 'error'=>$error));
-
-});
-/*
- * Drzewka usuwanie ceny produktu (rodzaju)
- */
-$app->get('/admin/drzewka/produkt/usun/:id', function ($id) use ($admin) {
-    
-    $produkty=Model::factory('CennikDrzewkaProdukt')->find_many();
-
-    $cena=Model::factory('CennikDrzewkaCena')->find_one($id);
-    
-    if($cena instanceof CennikDrzewkaCena) {
-        $cena->delete();
-        
-        $error['status']='0';
-        $error['msg']='Cena zostało skasowana poprawnie';
-        
-        $admin->render('/drzewka/cennik_edycja.php',array('produkty'=>$produkty, 'form'=>'add', 'error'=>$error));
-        exit();
-    } else {
-        $error['status']='1';
-        $error['msg']='Coś poszło nie tak';
-    }
-    
-    $admin->render('/drzewka/cennik_edycja.php',array('produkty'=>$produkty, 'form'=>'add', 'error'=>$error));
-});
-
-/*
- * Cennik uslugi ......................................................................
- */
-
-/*
- * Usługi - lista uslug
- */
-$app->get('/admin/uslugi/lista', function () use ($admin) {
-    
-    $uslugi = Model::factory('UslugiRodzaj')->order_by_asc('pozycja')->find_many();
-
-    $admin->render('/uslugi/cennik_lista.php',array('uslugi'=>$uslugi));
-});
-
-/*
- * Usługi - dodaj usluge
- */
-$app->get('/admin/uslugi/dodaj', function () use ($admin) {
-    
-    $admin->render('/uslugi/cennik_edycja.php',array('form'=>'add'));
-});
-
-$app->post('/admin/uslugi/dodaj', function () use ($admin) {
-   
-    $usluga = Model::factory('UslugiRodzaj')->create();
-    $usluga->pozycja   = $admin->app->request()->post('pozycja');
-    $usluga->nazwa   = $admin->app->request()->post('nazwa');
-    $usluga->cena  = $admin->app->request()->post('cena');
-    
-    $admin->render('/uslugi/cennik_edycja.php', array('usluga'=>$usluga, 'form'=>'add', 'error'=>$error));
-
-});
-
-/*
- * Usługi - edytuj usluge
- */
-$app->get('/admin/uslugi/edytuj/:id', function ($id) use ($admin) {
-    $usluga=Model::factory('UslugiRodzaj')->find_one($id);
-    //edycja obrazkow
-    $admin->render('/uslugi/cennik_edycja.php',array('usluga'=>$usluga, 'form'=>'edit'));
-});
-
-$app->post('/admin/uslugi/edytuj/:id', function ($id) use ($admin) {
-
-    $usluga=Model::factory('UslugiRodzaj')->find_one($id);
-    
-    if($usluga instanceof UslugiRodzaj) {
-    $usluga->pozycja   = $admin->app->request()->post('pozycja');
-    $usluga->nazwa   = $admin->app->request()->post('nazwa');
-    $usluga->cena  = $admin->app->request()->post('cena');
-           
-        $usluga->save();
-
-        $error['status']='0';
-        $error['msg']='Usługa została wyedytowana poprawnie';
-            
-        
-    } else {
-        $error['status']='1';
-        $error['msg']='Coś poszło nie tak. Spróbuj ponownie.';
-    }
-    
-    $admin->render('/uslugi/cennik_edycja.php', array('usluga'=>$usluga, 'form'=>'edit', 'error'=>$error));
-
-});
-/*
- * Usługi - usun usluge
- */
-$app->get('/admin/uslugi/usun/:id', function ($id) use ($admin) {
-    $usluga=Model::factory('UslugiRodzaj')->find_one($id);
-    
-    if($usluga instanceof UslugiRodzaj) {
-        $usluga->delete();
-        
-        $error['status']='0';
-        $error['msg']='Zdjęcie zostało wyedytowane poprawnie';
-        
-        $admin->render('/uslugi/cennik_edycja.php',array('form'=>'add'));
-        exit();
-    } else {
-        $error['status']='1';
-        $error['msg']='Coś poszło nie tak';
-    }
-    $admin->render('/uslugi/cennik_edycja.php',array('form'=>'add', 'error'=>$error));
-});
 
 /*
  * Galeria ......................................................................
