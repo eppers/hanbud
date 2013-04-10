@@ -49,7 +49,7 @@
 					<td><input  type="checkbox"/></td>
 					<td>{{ product.product_name }}</td>
                                         <td>{{ product.producer_name }}</td>
-                                        <td><img src='/public/img/products/thumbs/{{ product.product_img }}' alt='{{product.product_name|cleanUrl}}'></td>
+                                        <td style='text-align: center;'><img src='/public/img/{% if product.product_img is not empty %}products/thumbs/{{ product.product_img }}{% else %}no_thumb.jpg{% endif %}' alt='{{product.product_name|cleanUrl}}'></td>
                                         <td>{{ product.product_pos }}</td>
 					<td class="options-width">
 					<a href="/admin/catalog/product/edit/{{ product.product_id }}" title="Edit" class="icon-1 info-tooltip"></a>

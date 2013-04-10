@@ -91,6 +91,7 @@ $app->get('/katalog/:vars', function ($vars) use ($app) {
  
           $subcat['id'] = $subcategory->subcat_id;
           $subcat['name'] = $subcategory->name;
+          $subcat['img'] = $subcategory->img;
           $subcat['clearUrl'] = cleanForShortURL($subcategory->name);
           
           $link = 'product';
@@ -115,6 +116,7 @@ $app->get('/katalog/:vars', function ($vars) use ($app) {
           
           $prod['id'] = $list->prod_id;
           $prod['name'] = $list->name;
+          $prod['img'] = $list->img;
           $prod['desc'] = $list->desc;
           $prod['clearUrl'] = cleanForShortURL($list->name);
           
@@ -128,7 +130,7 @@ $app->get('/katalog/:vars', function ($vars) use ($app) {
     };
     
     
-    $app->render($render.'.php',array('list'=>$list, 'title'=>$title, 'category'=>$cat ,'subcategory'=>$subcat, 'product'=>$prod, 'link'=>$link));
+    $app->render($render.'.php',array('list'=>$list, 'title'=>$title, 'category'=>$cat ,'producer'=>$subcat, 'product'=>$prod, 'link'=>$link));
     
 });
 
