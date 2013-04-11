@@ -24,7 +24,7 @@
 
 			<nav>
 				<ul class="main-menu">
-					<li><a href="/hanbud/home">Strona główna</a></li>
+					<li><a href="/home">Strona główna</a></li>
 					<li><a href="">Oferta</a></li>
 					<li><a href="">O firmie</a></li>
 					<li><a href="">Galeria</a></li>

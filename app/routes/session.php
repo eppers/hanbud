@@ -12,28 +12,9 @@ $app->get('/', function () use ($app) {
 /**
  * Strona główna
  */
+$app->get('/home', function () use ($app) {
 
-
-$app->get('/menugen', function () use ($app) {
-
-    $categories = Model::factory('Category')->order_by_asc('pos')->find_many();
-
-    foreach($categories as $cat) {
-        if($cat instanceof Category) {
-
-            $catArray['name'] = $cat->name;
-            $catArray['id'] = $cat->cat_id;
-            $catArray['subcats'] = $cat->subcategories()->order_by_asc('pos')->find_many();
-            
-            $catArrays[] = $catArray;
-        }
-    }
-    
-    
-    $menu = new Menu();
-    $menu->generate($catArrays);
-
-    //$app->render('home.php');
+    $app->render('home.php');
 });
 
 /**
