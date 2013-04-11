@@ -59,7 +59,8 @@
                 </tr>
                  <tr>
                     <th valign="top">Obrazek:</th>
-                    <td><input type="text" name="img" class="inp-form" value="{{product.img}}"/></td>
+                    <td><img src="/public/img/{% if product.img is not empty %}products/thumbs/{{ product.img }}{% else %}no_thumb.jpg{% endif %}" >
+                        <input type="hidden" name="img" class="inp-form" value="{{product.img}}"/></td>
                     <td style="display: block"><a href="#" title="Pliki 2MB, jpeg, png, gif." id="upload-file-enable" class="btn btn-danger">Wybierz nowy obrazek</a></td>
                 </tr>
                 <tr id="upload-file">
