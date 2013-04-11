@@ -66,61 +66,73 @@ $app->get('/katalog/:vars', function ($vars) use ($app) {
     switch ($type) {
       case 'category':
           $category = Model::factory('Category')->find_one($id);
-          $list = $category->subcategories()->find_many();  
-          $title = $category->name;
+          if($category instanceof Category) {          
+            $list = $category->subcategories()->order_by_asc('pos')->find_many();  
+            $title = $category->name;
 
-          $cat['id'] = $category->cat_id;
-          $cat['name'] = $title;
-          $cat['clearUrl'] = cleanForShortURL($category->name);
- 
-          $link = 'subcategory';
-          
-          $render = 'productslist';
+            $cat['id'] = $category->cat_id;
+            $cat['name'] = $title;
+            $cat['clearUrl'] = cleanForShortURL($category->name);
+
+            $link = 'subcategory';
+
+            $render = 'productslist';
+          } else {
+              $app->redirect('/');                   
+          }
           break;
       
        case 'subcategory':
-          $subcategory = Model::factory('Subcategory')->find_one($id);           
-          $list = $subcategory->products()->find_many();
-          $title = $subcategory->name;
-          
-          $category = $subcategory->category()->find_one();
-          
-          $cat['id'] = $category->cat_id;
-          $cat['name'] = $category->name;
-          $cat['clearUrl'] = cleanForShortURL($category->name);
- 
-          $subcat['id'] = $subcategory->subcat_id;
-          $subcat['name'] = $subcategory->name;
-          $subcat['img'] = $subcategory->img;
-          $subcat['clearUrl'] = cleanForShortURL($subcategory->name);
-          
-          $link = 'product';
-          
-          $render = 'productslist';
+          $subcategory = Model::factory('Subcategory')->find_one($id);    
+          if($subcategory instanceof Subcategory) {
+            $list = $subcategory->products()->order_by_asc('pos')->find_many();
+            $title = $subcategory->name;
+
+            $category = $subcategory->category()->find_one();
+
+            $cat['id'] = $category->cat_id;
+            $cat['name'] = $category->name;
+            $cat['clearUrl'] = cleanForShortURL($category->name);
+
+            $subcat['id'] = $subcategory->subcat_id;
+            $subcat['name'] = $subcategory->name;
+            $subcat['img'] = $subcategory->img;
+            $subcat['clearUrl'] = cleanForShortURL($subcategory->name);
+
+            $link = 'product';
+
+            $render = 'productslist';
+          } else {
+              $app->redirect('/');              
+          }
           break;
       
        case 'product':
           $list = Model::factory('Product')->find_one($id);
-          $title = $list->name;
-          
-          $subcategory = $list->subcategory()->find_one();
-          $category = $subcategory->category()->find_one();
-          
-          $cat['id'] = $category->cat_id;
-          $cat['name'] = $category->name;
-          $cat['clearUrl'] = cleanForShortURL($category->name);          
- 
-          $subcat['id'] = $subcategory->subcat_id;
-          $subcat['name'] = $subcategory->name;
-          $subcat['clearUrl'] = cleanForShortURL($subcategory->name);
-          
-          $prod['id'] = $list->prod_id;
-          $prod['name'] = $list->name;
-          $prod['img'] = $list->img;
-          $prod['desc'] = $list->desc;
-          $prod['clearUrl'] = cleanForShortURL($list->name);
-          
-          $render = 'product';
+          if($list instanceof Product) { 
+            $title = $list->name;
+
+            $subcategory = $list->subcategory()->find_one();
+            $category = $subcategory->category()->find_one();
+
+            $cat['id'] = $category->cat_id;
+            $cat['name'] = $category->name;
+            $cat['clearUrl'] = cleanForShortURL($category->name);          
+
+            $subcat['id'] = $subcategory->subcat_id;
+            $subcat['name'] = $subcategory->name;
+            $subcat['clearUrl'] = cleanForShortURL($subcategory->name);
+
+            $prod['id'] = $list->prod_id;
+            $prod['name'] = $list->name;
+            $prod['img'] = $list->img;
+            $prod['desc'] = $list->desc;
+            $prod['clearUrl'] = cleanForShortURL($list->name);
+
+            $render = 'product';
+          } else {
+            $app->redirect('/');              
+          }
           break;
       
        default:

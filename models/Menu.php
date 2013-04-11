@@ -2,23 +2,41 @@
 
 class Menu {
     
-    protected $menuPath = "./template/menu.tpl.php";
+    protected static $_menuPath = "./template/menu.tpl.php";
 
-    public function generate(array $categories) {
+    public static function generate() {
+    
+        $categories = Model::factory('Category')->find_many();
+        
+        foreach($categories as $cat) {
+            if($cat instanceof Category) {
 
-        $file = fopen($this->menuPath, "wb");
+                $catArray['name'] = $cat->name;
+                $catArray['id'] = $cat->cat_id;
+                $catArray['subcats'] = $cat->subcategories()->order_by_asc('pos')->find_many();
+
+                $catArrays[] = $catArray;
+            }
+        }
+        
+        self::generateFile($catArrays);
+    }
+    
+    protected static function generateFile(array $categories) {
+
+        $file = fopen(self::$_menuPath, "wb");
 
         $text = '<h2>Kategorie produktów</h2>
 
                 <ul class="offer-menu" id="nested-menu">';
                 foreach ($categories as $cat) {
                     
-                $text .= '<li class="level-1 active">
+                $text .= '<li class="level-1 active" rel="'.$cat['id'].'">
                             <strong>'.$cat["name"].'</strong>
                             <ul>';
 
                             foreach ($cat["subcats"] as $subcat) {
-                                    $text .= "<li><a href='/hanbud/katalog/subcategory,".$subcat->subcat_id.",".cleanForShortURL($subcat->name)."'>".$subcat->name."</a></li>\r";
+                                    $text .= "<li><a href='/katalog/subcategory,".$subcat->subcat_id.",".cleanForShortURL($subcat->name)."'>".$subcat->name."</a></li>\r";
                             };
                  $text .= '</ul>
                         </li>';

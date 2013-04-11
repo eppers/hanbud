@@ -121,7 +121,7 @@ $app->post('/admin/catalog/category/delete/:id', function ($id) use ($admin) {
  */
 $app->get('/admin/catalog/producer/all', function () use ($admin) {
     
-    $subcategories=Model::factory('Subcategory')->find_many();
+    $subcategories=Model::factory('Subcategory')->order_by_asc('pos')->find_many();
     
     $admin->render('/subcategory/list.php',array('subcategories'=>$subcategories));
     $_SESSION['msg'] = '';
@@ -141,11 +141,11 @@ $app->post('/admin/catalog/producer/add', function () use ($admin) {
    
     $subcategory = Model::factory('Subcategory')->create();
     $subcategory->cat_id   = $admin->app->request()->post('cat_id');
-    $subcategory->name   = $admin->app->request()->post('nazwa');
+    $subcategory->name   = $admin->app->request()->post('name');
     $subcategory->pos  = $admin->app->request()->post('pos');
 
     $category = Model::factory('Category')->find_one($admin->app->request()->post('cat_id'));
-    
+    $categories = Model::factory('Category')->find_many();
     
     if($category instanceof Category) {
     
@@ -155,17 +155,17 @@ $app->post('/admin/catalog/producer/add', function () use ($admin) {
 
             if($error['status']==1) {
 
-                    $categories = Model::factory('Category')->find_many();
-                
-                    $admin->render('/subcategory/edit.php', array('catagories'=>$categories, 'subcategory'=>$subcategory, 'form'=>'add', 'error'=>$error));
+                    $admin->render('/subcategory/edit.php', array('categories'=>$categories, 'producer'=>$subcategory, 'form'=>'add', 'error'=>$error));
                 exit();
             } else {
 
-            $subcategory->img  = $_SESSION['uploaded_file'];
+            $subcategory->img  = $error['uploaded_file'];
             $subcategory->save();
             $_SESSION['status']='0';
             $_SESSION['msg']='Producent został dodany pomyślnie';
 
+            Menu::generate();
+            
             $admin->app->redirect('/admin/catalog/producer/all');
             }
 
@@ -173,18 +173,16 @@ $app->post('/admin/catalog/producer/add', function () use ($admin) {
 
         $error['status']='1';
         $error['msg']='Producent nie został utworzony';
-        $categories = Model::factory('Category')->find_many();
         
-        $admin->render('/subcategory/edit.php', array('catagories'=>$categories, 'subcategory'=>$subcategory, 'form'=>'add', 'error'=>$error));
+        $admin->render('/subcategory/edit.php', array('catagories'=>$categories, 'producer'=>$subcategory, 'form'=>'add', 'error'=>$error));
         }
         
     } else {
         
         $error['status']='1';
         $error['msg']='Producent nie został utworzony';
-        $categories = Model::factory('Category')->find_many();
         
-        $admin->render('/subcategory/edit.php', array('catagories'=>$categories, 'subcategory'=>$subcategory, 'form'=>'add', 'error'=>$error));
+        $admin->render('/subcategory/edit.php', array('catagories'=>$categories, 'producer'=>$subcategory, 'form'=>'add', 'error'=>$error));
     }
     
 });
@@ -233,6 +231,8 @@ $app->post('/admin/catalog/producer/edit/:id', function ($id) use ($admin) {
                 $_SESSION['status']='0';
                 $_SESSION['msg']='Producent został wyedytowany poprawnie';
                 
+                Menu::generate();
+                
                 $admin->app->redirect('/admin/catalog/producer/all');
             
         
@@ -255,12 +255,14 @@ $app->get('/admin/catalog/producer/delete/:id', function ($id) use ($admin) {
     
     if($subcategory instanceof Subcategory) {
         
-        $remove = Image::remove($subcategory->img, $subcategory::$_workspace);
+        $remove = Image::remove($subcategory->img, $subcategory::$_workspace, true);
         if($remove) {
             $subcategory->delete();
 
             $_SESSION['status']='0';
             $_SESSION['msg']='Producent został skasowany poprawnie';
+            
+            Menu::generate();
             
             $admin->app->redirect('/admin/catalog/producer/all');
 
@@ -359,7 +361,7 @@ $app->post('/admin/catalog/product/add', function () use ($admin) {
             $product->save();
             $_SESSION['status']='0';
             $_SESSION['msg']='Rodzaj został dodany pomyślnie';
-            
+            Menu::generate();
             $admin->app->redirect('/admin/catalog/product/all');
             
     } else {
@@ -422,6 +424,7 @@ $app->post('/admin/catalog/product/edit/:id', function ($id) use ($admin) {
 
                 $_SESSION['status']='0';
                 $_SESSION['msg']='Produkt został wyedytowany poprawie';
+                Menu::generate();
                 
                 $admin->app->redirect('/admin/catalog/product/all');
             
@@ -439,21 +442,29 @@ $app->post('/admin/catalog/product/edit/:id', function ($id) use ($admin) {
  * Product delete
  */
 $app->get('/admin/catalog/product/delete/:id', function ($id) use ($admin) {
-    
-    $produkt=Model::factory('Product')->find_one($id);
+   
+    $product=Model::factory('Product')->find_one($id);
     
     if($product instanceof Product) {
-        $product->delete();
         
-        $_SESSION['status']='0';
-        $_SESSION['msg']='Produkt został skasowany poprawnie';
-        
+        $remove = Image::remove($product->img, $product::$_workspace, true);
+        if($remove) {
+            $product->delete();
+
+            $_SESSION['status']='0';
+            $_SESSION['msg']='Produkt został usunięty poprawnie';
+
+        } else {
+            $_SESSION['status']='1';
+            $_SESSION['msg']=$remove;            
+        }
     } else {
         $_SESSION['status']='1';
-        $_SESSION['msg']='Coś poszło nie tak';
+        $_SESSION['msg']='Coś poszło nie tak. Spróbuj ponownie.';
     }
     
     $admin->app->redirect('/admin/catalog/product/all');
+    
 });
 
 

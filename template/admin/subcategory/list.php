@@ -51,7 +51,7 @@
 					<td>{{ producer.pos }}</td>
 					<td class="options-width">
 					<a href="/admin/catalog/producer/edit/{{ producer.subcat_id }}" title="Edit" class="icon-1 info-tooltip"></a>
-                                        <a href="/admin/catalog/producer/delete/{{ category.cat_id }}" title="Delete" class="icon-2 info-tooltip"></a>
+                                        <a href="/admin/catalog/producer/delete/{{ producer.subcat_id }}" title="Delete" class="icon-2 info-tooltip"></a>
 					</td>
 				</tr>
                         {% else %}  

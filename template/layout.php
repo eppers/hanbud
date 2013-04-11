@@ -69,5 +69,10 @@
 	<script>window.jQuery || document.write('<script src="/public/js/vendor/jquery-1.8.3.min.js"><\/script>')</script>
 	<script src="/public/js/plugins.js"></script>
 	<script src="/public/js/main.js"></script>
+        <script>
+        $(document).ready(function() {
+            $('#nested-menu li[rel="{{category.id}}"]').addClass('active');
+        });
+        </script>
 </body>
 </html>
