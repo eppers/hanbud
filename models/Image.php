@@ -64,7 +64,7 @@ class Image {
     // Walidacja nazwy pliku (usunięcie niewłaściwych znaków)
             $file_name = preg_replace('/[^'.$valid_chars_regex.']+$/i', '', strtolower(basename($_FILES['file']['name'])));
             if (strlen($file_name) == 0 || strlen($file_name) > $MAX_FILENAME_LENGTH)
-                    throw new Exception('Niewłaściwa nazwa pliku z preg replace');
+                    throw new Exception('Za długa nazwa pliku.');
 
     // Walidacja rozszerzenia pliku na podstawie tablicy
 

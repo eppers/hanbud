@@ -20,9 +20,11 @@
             </div>
             <div class="product-bottom">
                 <p class="product-title">Opis produktu:</p>
-                <p class="product-desc">
-                    {{product.desc|nl2br}}
-                </p>
+                <div class="product-desc">
+                    {% autoescape false %} 
+                      {{ product.desc|raw }}
+                    {% endautoescape %} 
+                </div>
             </div>
 	</div>
 </article>

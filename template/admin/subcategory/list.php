@@ -47,7 +47,7 @@
 				<tr {% if loop.index is divisibleby(2) %} class="alternate-row" {% endif %} >
 					<td><input  type="checkbox"/></td>
 					<td>{{ producer.name }}</td>
-                                        <td>{% if producer.url is not empty %}<img src="/public/img/producer/thumbs/{{ producer.url }}"{% endif %}</td>
+                                        <td><img src="/public/img/{% if producer.img is not empty %}producers/thumbs/{{ producer.img }}{% else %}no_thumb.jpg{% endif %}"></td>
 					<td>{{ producer.pos }}</td>
 					<td class="options-width">
 					<a href="/admin/catalog/producer/edit/{{ producer.subcat_id }}" title="Edit" class="icon-1 info-tooltip"></a>

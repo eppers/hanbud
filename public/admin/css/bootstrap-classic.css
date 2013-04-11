@@ -4978,7 +4978,8 @@ a.badge:hover {
 }
 
 #upload-file-enable {
-    margin-left: 10px;
+    margin-top: 20px;
+    margin-left: 0px;
 }
 
 input.file_1 {

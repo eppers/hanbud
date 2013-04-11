@@ -35,6 +35,9 @@
        
        
         <table border="0" cellpadding="0" cellspacing="0"  id="id-form">
+            <tr>
+            <td>
+                <table>
                 <tr>
                     <th valign="top">Producent:</th>
                     <td>
@@ -61,7 +64,10 @@
                     <th valign="top">Obrazek:</th>
                     <td><img src="/public/img/{% if product.img is not empty %}products/thumbs/{{ product.img }}{% else %}no_thumb.jpg{% endif %}" >
                         <input type="hidden" name="img" class="inp-form" value="{{product.img}}"/></td>
-                    <td style="display: block"><a href="#" title="Pliki 2MB, jpeg, png, gif." id="upload-file-enable" class="btn btn-danger">Wybierz nowy obrazek</a></td>
+                </tr>
+                <tr>
+                    <th valign="top"></th>
+                    <td style="display: block"><a href="#" title="Pliki 2MB, jpeg, png, gif." id="upload-file-enable" class="btn btn-danger">Zmień obrazek</a></td>
                 </tr>
                 <tr id="upload-file">
                     <th valign="top">Wybierz obrazek:</th>
@@ -69,12 +75,23 @@
                 </tr>
                 <tr>
                     <th>&nbsp;</th>
-                    <td valign="top">
-                            <button type="submit" class="btn btn-primary" >Zapisz</button>
+                    <td style="padding-top: 40px;">
+                            <button type="submit" class="btn btn-primary" >Zapisz zmiany</button>
                             <input type="reset" value="" class="form-reset"  />
                     </td>
                     <td></td>
                 </tr>
+                </table>
+            </td>
+            <td style="vertical-align: top; padding-left: 100px;">
+                <p class="title">Opis produktu:</p>
+                <div class="control-group">
+                        <div class="controls">
+                            <textarea class="cleditor" id="textarea2" name="desc" rows="3">{{product.desc}}</textarea>
+                        </div>
+                </div>
+            </td>
+            </tr>
 	</table>
 	<!-- end id-form  -->
 

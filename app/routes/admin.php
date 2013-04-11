@@ -400,6 +400,7 @@ $app->post('/admin/catalog/product/edit/:id', function ($id) use ($admin) {
         $product->subcat_id =  $admin->app->request()->post('producer_id');
         $product->name =  $admin->app->request()->post('name');
         $product->pos =  $admin->app->request()->post('pos');
+        $product->desc =  $admin->app->request()->post('desc');
         
                    
             if (isset($_FILES['file'])) {

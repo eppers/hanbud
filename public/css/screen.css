@@ -463,6 +463,17 @@ a:hover {
   left: 0;
 }
 
+.products-categories .img-container {
+    width: 140px;
+    height: 100px;
+    display: inline-block;
+    line-height: 100px;
+}
+
+.img-container img {
+    vertical-align: middle;
+}
+
 /* Intro */
 /* line 324, ../sass/screen.scss */
 .intro-container {
@@ -542,7 +553,8 @@ a:hover {
     margin-left: 52px;
 }
 
-p.product-desc {
+div.product-desc {
+    float: left;
     margin-left: 52px;
     margin-top: 7px;
     margin-bottom: 178px;
