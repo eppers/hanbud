@@ -29,7 +29,10 @@ $app->get('/home', function () use ($app) {
 /**
  * Kontakt
  */
+$app->get('/kontakt', function () use ($app) {
 
+    $app->render('contact.php');
+});
 /**
  * Katalog
  */

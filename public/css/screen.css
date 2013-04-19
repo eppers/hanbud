@@ -559,3 +559,42 @@ div.product-desc {
     margin-top: 7px;
     margin-bottom: 178px;
 }
+
+
+/* Contact */
+
+
+.contact-box {
+  margin: 15px 0;
+  padding: 10px;
+  border: 1px solid #f4f4f4;
+  background: white;
+  overflow: hidden;
+}
+
+.contact-box p, .contact-box ol, .contact-box ul, .contact-box dl, .contact-box form, .contact-box table, .contact-box blockquote {
+  margin-bottom: 1.2em;
+  line-height: 14px;
+}
+
+
+.contact-col-left {
+  width: 200px;
+  margin: 10px 0;
+  padding: 0 0px 0 19px;
+  float: left;
+}
+
+
+.contact-col-right {
+  width: 425px;
+  margin: 10px 0;
+  padding: 0 0px 0 35px;
+  border-left: 1px solid #f4f4f4;
+  float: right;
+}
+
+#google-map {
+    width: 100%;
+    height: 360px;
+}
