@@ -31,28 +31,40 @@
             {% include 'error.php' %}
         {% endif %}
 		<!-- start id-form -->
-   <form name="site-form" action="{% if form=='edit' %}/admin/galeria/edytuj/{{foto.id_foto}} {% else %} /admin/galeria/dodaj {% endif %}" method="post" enctype="multipart/form-data">        
+   <form name="site-form" action="{% if form=='edit' %}/admin/foto/edit/{{foto.foto_id}} {% else %} /admin/foto/add {% endif %}" method="post" enctype="multipart/form-data">        
        
        
         <table border="0" cellpadding="0" cellspacing="0"  id="id-form">
                 <tr>
                     <th valign="top">Pozycja:</th>
-                    <td><input type="text" name="pozycja" class="inp-form" value="{{foto.pozycja}}"/></td>
+                    <td><input type="text" name="pos" class="inp-form" value="{{foto.pos}}"/></td>
                     <td></td>
                 </tr>	
                 <tr>
-                    <th valign="top">Obrazek:</th>
-                    <td><input type="text" name="obrazek" class="inp-form" value="{{foto.url}}"/></td>
-                    <td style="display: block"><a href="#" title="Pliki 2MB, jpeg, png, gif." id="upload-file-enable" class="btn btn-danger">Wyślij obrazek</a></td>
-                </tr>
-                <tr id="upload-file">
-                    <th valign="top">Wybierz obrazek:<br /><span style="font-size: 11px;">(MAX 2mb)</span></th>
-                    <td><input type="file" name="file" class="file_1" disabled="disabled"/></td>
-                </tr>
-                <tr>
-                    <th valign="top">Alt obrazka:</th>
+                    <th valign="top">Opis (alt) obrazka:</th>
                     <td><input type="text" name="alt" class="inp-form" value="{{foto.alt}}"/></td>
                     <td></td>
+                </tr>
+                {% if(form=='edit') %}
+                <tr>
+                    <th valign="top">Obrazek:</th>
+                    <td><img src="/public/img/{% if foto.img is not empty %}gallery/thumbs/{{ foto.img }}{% else %}no_thumb.jpg{% endif %}" ></td>
+                </tr>
+                {% else %}
+                <tr>
+                    <th valign="top">Wybierz obrazek:<br /><span style="font-size: 11px;">(MAX 2mb; jpg, gif, png)</span></th>
+                    <td><input type="file" name="file" class="file_1" /></td>
+                </tr>
+                {% endif %}
+                <tr>
+                    <th valign="top">Opis realizacji:</th>
+                    <td>
+                        <div class="control-group">
+                                <div class="controls">
+                                    <textarea class="cleditor" id="textarea2" name="desc" rows="3">{{foto.desc}}</textarea>
+                                </div>
+                        </div>
+                    </td>
                 </tr>
                 <tr>
                     <th>&nbsp;</th>

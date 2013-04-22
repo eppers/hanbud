@@ -6,13 +6,15 @@
 <div id="content-outer">
 <!-- start content -->
 <div id="content">
-
+        {% if session.msg is not empty %}
+            {% include 'error.php' %}
+        {% endif %}
 	<!--  start page-heading -->
 	<div id="page-heading">
 		<h1>Zdjęcia</h1>
 	</div>
 	<!-- end page-heading -->
-        <a href="/admin/galeria/dodaj" id="add-program" class="btn btn-large btn-primary">Dodaj zdjęcie</a>
+        <a href="/admin/foto/add" id="add-program" class="btn btn-large btn-primary">Dodaj zdjęcie</a>
 	<table border="0" width="100%" cellpadding="0" cellspacing="0" id="content-table">
 	<tr>
 		<th rowspan="3" class="sized"><img src="/public/admin/img/shared/side_shadowleft.jpg" width="20" height="300" alt="" /></th>
@@ -40,22 +42,22 @@
 					<th class="table-header-repeat line-left minwidth-1"><a href="">Url pliku</a></th>
                                         <th class="table-header-repeat line-left minwidth-1"><a href="">Alt</a></th>
                                         <th class="table-header-repeat line-left minwidth-1"><a href="">Pozycja</a></th>
-                                        <th class="table-header-options line-left"><a href="">Options</a></th>
+                                        <th class="table-header-options line-left"><a href="">Opcje</a></th>
 				</tr>
                            {% for foto in fotos %}
                             <tr {% if loop.index is divisibleby(2) %} class="alternate-row" {% endif %} >
                                     <td><input  type="checkbox"/></td>
-                                    <td><div style="max-width: 185px; overflow: hidden;"><img src="/public/images/gallery/thumbs/{{ foto.url }}" /></div></td>
-                                    <td>{{ foto.url }}</td>
+                                    <td><div style="max-width: 185px; overflow: hidden;"><img src="/public/img/gallery/thumbs/{{ foto.img }}" /></div></td>
+                                    <td>{{ foto.img }}</td>
                                     <td>{{ foto.alt }}</td>
-                                    <td>{{ foto.pozycja }}</td>                                    
+                                    <td>{{ foto.pos }}</td>                                    
                                     <td class="options-width">
-                                    <a href="/admin/galeria/edytuj/{{ foto.id_foto }}" title="Edit" class="icon-1 info-tooltip"></a>
-                                    <a href="/admin/galeria/usun/{{ foto.id_foto }}" title="Usuń" class="icon-2 info-tooltip"></a>
+                                    <a href="/admin/foto/edit/{{ foto.foto_id }}" title="Edit" class="icon-1 info-tooltip"></a>
+                                    <a href="/admin/foto/delete/{{ foto.foto_id }}" title="Usuń" class="icon-2 info-tooltip"></a>
                                     </td>
                             </tr>
                             {% else %}  
-                                <tr><td><p>Brak stron</p></td><td>{{test}}</td></tr>
+                                <tr><td><p>Brak zdjęć</p></td></tr>
                         {% endfor %}
 
 				

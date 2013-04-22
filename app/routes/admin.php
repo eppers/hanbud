@@ -474,47 +474,51 @@ $app->get('/admin/catalog/product/delete/:id', function ($id) use ($admin) {
 
 
 /*
- * Galeria ......................................................................
+ * Oferta - Gallery ......................................................................
  */
 
-/*
- * Galeria - lista zdjęć
- */
-$app->get('/admin/galeria/lista', function () use ($admin) {
+$app->get('/admin/foto/all', function () use ($admin) {
+    $fotos=Model::factory('Foto')->order_by_asc('pos')->find_many();
+    $admin->render('/foto/list.php',array('fotos'=>$fotos));
     
-    $fotos = Model::factory('Foto')->order_by_asc('pozycja')->find_many();
-
-    $admin->render('/foto/lista.php',array('fotos'=>$fotos));
+    $_SESSION['msg'] = '';
 });
 
-/*
- * Galeria - dodaj foto
+/**
+ * Add foto
  */
-$app->get('/admin/galeria/dodaj', function () use ($admin) {
+
+$app->get('/admin/foto/add', function () use ($admin) {
+ 
+    $admin->render('/foto/edit.php',array('form'=>'add'));
+
     
-    $admin->render('/foto/edycja.php',array('form'=>'add'));
 });
 
-$app->post('/admin/galeria/dodaj', function () use ($admin) {
+$app->post('/admin/foto/add', function () use ($admin) {
    
     $foto = Model::factory('Foto')->create();
-    $foto->pozycja   = $admin->app->request()->post('pozycja');
+    $foto->pos   = $admin->app->request()->post('pos');
     $foto->alt  = $admin->app->request()->post('alt');
+    $foto->desc = htmlentities($admin->app->request()->post('desc'), ENT_QUOTES, "UTF-8");
     
     if (isset($_FILES['file'])) {
 
         $error = Image::setImage($_FILES,$foto::$_workspace,true);
 
         if($error['status']==1) {
-                $admin->render('/foto/edycja.php', array('foto'=>$foto, 'form'=>'add', 'error'=>$error));
+                $admin->render('/foto/edit.php', array('foto'=>$foto, 'form'=>'add', 'error'=>$error));
             exit();
         } else {
 
 
-        $foto->url  = $error['uploaded_file'];
+        $foto->img  = $error['uploaded_file'];
         $foto->save();
-        $error['status']='0';
-        $error['msg']='Zdjęcie została dodana pomyślnie';
+        $_SESSION['status']='0';
+        $_SESSION['msg']='Zdjęcie została dodana pomyślnie';
+    
+        $admin->app->redirect('/admin/foto/all');
+    
         
         }
 
@@ -526,31 +530,34 @@ $app->post('/admin/galeria/dodaj', function () use ($admin) {
     }
     
 
-    $admin->render('/foto/edycja.php', array('foto'=>$foto, 'form'=>'add', 'error'=>$error));
+    $admin->render('/foto/edit.php', array('foto'=>$foto, 'form'=>'add', 'error'=>$error));
 
 });
 
 /*
- * Galeria - edytuj zdjęcie
+ * Edit foto
  */
-$app->get('/admin/galeria/edytuj/:id', function ($id) use ($admin) {
+$app->get('/admin/foto/edit/:id', function ($id) use ($admin) {
     $foto=Model::factory('Foto')->find_one($id);
     
-    $admin->render('/galeria/edycja.php',array('foto'=>$foto, 'form'=>'edit'));
+    $admin->render('/foto/edit.php',array('foto'=>$foto, 'form'=>'edit'));
 });
 
-$app->post('/admin/galeria/edytuj/:id', function ($id) use ($admin) {
+$app->post('/admin/foto/edit/:id', function ($id) use ($admin) {
 
     $foto=Model::factory('Foto')->find_one($id);
     
     if($foto instanceof Foto) {
-    $foto->pozycja   = $admin->app->request()->post('pozycja');
+    $foto->pos   = $admin->app->request()->post('pos');
     $foto->alt   = $admin->app->request()->post('alt');
-   
+    $foto->desc = htmlentities($admin->app->request()->post('desc'), ENT_QUOTES, "UTF-8");
+    
     $foto->save();
 
-        $error['status']='0';
-        $error['msg']='Zdjęcie zostało wyedytowane poprawnie';
+        $_SESSION['status']='0';
+        $_SESSION['msg']='Zdjęcie została wyedytowane poprawnie';
+    
+        $admin->app->redirect('/admin/foto/all');
             
         
     } else {
@@ -558,34 +565,36 @@ $app->post('/admin/galeria/edytuj/:id', function ($id) use ($admin) {
         $error['msg']='Coś poszło nie tak. Spróbuj ponownie.';
     }
     
-    $admin->render('/foto/edycja.php', array('foto'=>$foto, 'form'=>'edit', 'error'=>$error));
+    $admin->render('/foto/edit.php', array('foto'=>$foto, 'form'=>'edit', 'error'=>$error));
 
 });
 /*
- * Galeria - usuń zdjęcie
+ * Delete foto
  */
-$app->get('/admin/galeria/usun/:id', function ($id) use ($admin) {
+$app->get('/admin/foto/delete/:id', function ($id) use ($admin) {
     $foto=Model::factory('Foto')->find_one($id);
     
     if($foto instanceof Foto) {
-        $remove = Image::remove($foto->url, $foto::$_workspace);
+        $remove = Image::remove($foto->img, $foto::$_workspace,true);
         if($remove) {
             $foto->delete();
-
-            $error['status']='0';
-            $error['msg']='Zdjęcie zostało usunięte';
-
+            
+            $_SESSION['status']='0';
+            $_SESSION['msg']='Zdjęcie zostało usunięte';
+    
         } else {
-            $error['status']='1';
-            $error['msg']=$remove;
+            $_SESSION['status']='1';
+            $_SESSION['msg']=$remove;
+    
+
         }
     } else {
-        $error['status']='1';
-        $error['msg']='Coś poszło nie tak';
+        $_SESSION['status']='1';
+        $_SESSION['msg']='Coś poszło nie tak';
     }
-
-    $admin->render('/foto/edycja.php',array('foto'=>$foto, 'form'=>'edit', 'error'=>$error));
+    $admin->app->redirect('/admin/foto/all');
 });
+
 
 
 

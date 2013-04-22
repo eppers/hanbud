@@ -14,10 +14,10 @@
 class Foto extends Model{
     
         
-    public static $_table = 'foto';
-    public static $_id_column = 'id_foto';
+    public static $_table = 'fotos';
+    public static $_id_column = 'foto_id';
     
-    public static $_workspace = './public/images/gallery/';
+    public static $_workspace = './public/img/gallery/';
    
 
 }

@@ -22,7 +22,8 @@ $app->get('/home', function () use ($app) {
  */
 $app->get('/oferta', function () use ($app) {
 
-    $app->render('offer.php', array('rel'=>'menu2'));
+    $fotos = Model::factory('Foto')->order_by_asc('pos')->find_many();
+    $app->render('offer.php', array('rel'=>'menu2', 'fotos'=>$fotos));
 });
 
 /**
