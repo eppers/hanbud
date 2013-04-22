@@ -76,6 +76,7 @@ $app->post('/admin/catalog/category/edit/:id', function ($id) use ($admin) {
         $_SESSION['status']='0';
         $_SESSION['msg']='Kategoria została wyedytowana poprawnie';
         
+        Menu::generate();
         
         $admin->app->redirect('/admin/catalog/category/all');
         
@@ -103,6 +104,8 @@ $app->post('/admin/catalog/category/delete/:id', function ($id) use ($admin) {
 
         $_SESSION['status']='0';
         $_SESSION['msg']='Kategoria została skasowana poprawnie';
+        
+        Menu::generate();
 
     } else {
         

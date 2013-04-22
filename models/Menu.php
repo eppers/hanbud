@@ -32,7 +32,7 @@ class Menu {
                 foreach ($categories as $cat) {
                     
                 $text .= '<li class="level-1 active" rel="'.$cat['id'].'">
-                            <strong>'.$cat["name"].'</strong>
+                            <a href="/katalog/category,'.$cat['id'].','.cleanForShortURL($cat['name']).'"><strong>'.$cat["name"].'</strong></a>
                             <ul>';
 
                             foreach ($cat["subcats"] as $subcat) {

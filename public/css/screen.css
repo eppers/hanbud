@@ -468,6 +468,7 @@ a:hover {
     height: 100px;
     display: inline-block;
     line-height: 100px;
+    margin-bottom: 10px;
 }
 
 .img-container img {

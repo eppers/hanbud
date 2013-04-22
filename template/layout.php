@@ -24,11 +24,11 @@
 
 			<nav>
 				<ul class="main-menu">
-					<li><a href="/home">Strona główna</a></li>
-					<li><a href="">Oferta</a></li>
-					<li><a href="">O firmie</a></li>
-					<li><a href="">Allegro</a></li>
-					<li><a href="/kontakt">Kontakt</a></li>
+					<li><a href="/home" rel="menu1">Strona główna</a></li>
+					<li><a href="" rel="menu2">Oferta</a></li>
+					<li><a href="" rel="menu3">O firmie</a></li>
+					<li><a href="" rel="menu4">Allegro</a></li>
+					<li><a href="/kontakt" rel="menu5">Kontakt</a></li>
 				</ul>
 			</nav>
 
@@ -47,7 +47,7 @@
 			</nav>
 
 			<ul class="quick-contact light">
-				<li><span class="phone-light"></span> 517 268 822</li>
+				<li><span class="phone-light"></span> 789 451 307</li>
 			</ul>
 		</div>
 
@@ -103,11 +103,21 @@
 			};
 			
 			mapa = new google.maps.Map(document.getElementById("google-map"), opcjeMapy); 
-			var marker = dodajMarker(49.84403,18.996394,'<strong>F.H.U. HAN-BUD Adrian Pawlisz</strong><br>Mazańcowice 57<br>43-391 Mazańcowice<br><br>502-865-977<br>789-451-307<br>tel./fax 33-815-50-13<br>email: hanbudbielsko@gmail.com');
+			var marker = dodajMarker(49.84403,18.996394,'<strong>F.H.U. HAN-BUD Adrian Pawlisz</strong><br>Mazańcowice 57<br>43-391 Mazańcowice<br><br>789-451-307<br>tel./fax 33-815-50-13<br>email: hanbudbielsko@gmail.com');
 			google.maps.event.trigger(marker,'click');
 		}   
 
         -->
         </script>  
+        {% if rel is not empty %}
+        <script>
+         <!-- 
+             $(document).ready(function() {
+                 $('.main-menu a[rel="{{rel}}"]').addClass('active');
+             });
+ 
+         -->
+        </script>
+        {% endif %}
 </body>
 </html>

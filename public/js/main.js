@@ -5,11 +5,15 @@ $(document).ready(function() {
 
 		$menu.find('> li').removeClass('active');
 
-		$menu.on('click', 'strong', function(e) {
-			$(this).parent().toggleClass('active');
+
+
+	/*  Rozwija menu bez urachamiania linkow kategorii	
+         * $menu.on('click', 'strong', function(e) {
+			$(this).parents('li').toggleClass('active');
 
 			e.preventDefault();
 		});
+                */
 	})();
 
 	$('#to-top').click(function(e) {
