@@ -21,7 +21,7 @@ require './models/Category.php';
 require './models/Subcategory.php';
 require './models/Product.php';
 
-require './models/Strona.php';
+require './models/Site.php';
 require './models/Foto.php';
 require './models/Image.php';
 

@@ -40,23 +40,18 @@
 				<tr>
 					<th class="table-header-check"><a id="toggle-all" ></a> </th>
 					<th class="table-header-repeat line-left minwidth-1"><a href="">Nazwa</a></th>
-                                        <th class="table-header-repeat line-left minwidth-1"><a href="">Kategoria nadrzędna</a></th>
-                                        <th class="table-header-repeat line-left minwidth-1"><a href="">Pozycja</a></th>
                                         <th class="table-header-options line-left"><a href="">Opcje</a></th>
 				</tr>
                            {% for site in sites %}
                             <tr {% if loop.index is divisibleby(2) %} class="alternate-row" {% endif %} {% if site.isCat == 1 %}style="background-color: #dedede;"{% endif %} >
                                     <td><input  type="checkbox"/></td>
                                     <td>{{ site.name }}</td>
-                                    <td>{{ site.category_name }}</td>
-                                    <td>{{ site.pos }}</td>
                                     <td class="options-width">
                                     <a href="/admin/site/edit/{{ site.id }}" title="Edytuj" class="icon-1 info-tooltip"></a>
-                                    <a href="/admin/site/delete/{{ site.id }}" title="Usuń" class="icon-2 info-tooltip"></a>
                                     </td>
                             </tr>
                             {% else %}  
-                                <tr><td colspan="5"><p>Brak pozycji</p></td></tr>
+                                <tr><td colspan="3"><p>Brak pozycji</p></td></tr>
                         {% endfor %}
 
 				

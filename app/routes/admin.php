@@ -606,7 +606,7 @@ $app->post('/admin/offer/edit/:id', function ($id) use ($admin) {
     $foto->save();
 
         $_SESSION['status']='0';
-        $_SESSION['msg']='Zdjęcie została wyedytowane poprawnie';
+        $_SESSION['msg']='Pozycja została wyedytowane poprawnie';
     
         $admin->app->redirect('/admin/offer/all');
             
@@ -631,7 +631,7 @@ $app->get('/admin/offer/delete/:id', function ($id) use ($admin) {
             $foto->delete();
             
             $_SESSION['status']='0';
-            $_SESSION['msg']='Zdjęcie zostało usunięte';
+            $_SESSION['msg']='Pozycja zostało usunięta';
     
         } else {
             $_SESSION['status']='1';
@@ -646,7 +646,44 @@ $app->get('/admin/offer/delete/:id', function ($id) use ($admin) {
     $admin->app->redirect('/admin/offer/all');
 });
 
+/*
+ * Sites ......................................................................
+ */
+$app->get('/admin/site/all', function () use ($admin) {
+    $sites=Model::factory('Site')->find_many();
+    $admin->render('/site/list.php',array('sites'=>$sites));
+    
+    $_SESSION['msg'] = '';
+});
 
 
+/*
+ * Edit site
+ */
+$app->get('/admin/sites/edit/:id', function ($id) use ($admin) {
+ 
+    $site=Model::factory('Site')->find_one($id);
+    
+    if($site instanceof Site) {
 
+        $admin->render('/site/edit.php',array('site'=>$site, 'form'=>'edit'));
+    }
+    else $admin->redirect('/admin/site/all');
+});
 
+$app->post('/admin/sites/edit/:id', function ($id) use ($admin) {
+ 
+    $site=Model::factory('Site')->find_one($id);
+    
+    if($site instanceof Site) {
+
+        $site->content   = $admin->app->request()->post('content');
+        $site->save();
+        
+        $_SESSION['status']='0';
+        $_SESSION['msg']='Strona została wyedytowana pomyślnie';
+        
+    } 
+    
+    $admin->app->redirect('/admin/site/all');
+});

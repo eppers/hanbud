@@ -25,7 +25,12 @@ $app->get('/oferta', function () use ($app) {
  */
 $app->get('/o-firmie', function () use ($app) {
 
-    $app->render('about.php', array('rel'=>'menu3', 'title'=>'O firmie'));
+    // o-firme site id
+    $id = 15;
+    
+    $site = Model::factory('Site')->find_one($id);
+    
+    ($site instanceof Site)? $app->render('about.php', array('rel'=>'menu3', 'title'=>'O firmie', 'site'=>$site)) : $app->redirect('/');
 });
 
 /**

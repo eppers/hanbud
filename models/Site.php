@@ -5,10 +5,10 @@
  * and open the template in the editor.
  */
 
-class Strona extends Model{
+class Site extends Model{
         
-    public static $_table = 'strony';
-    public static $_id_column = 'id_strony';
+    public static $_table = 'sites';
+    public static $_id_column = 'site_id';
     
    
    

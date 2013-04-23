@@ -7,7 +7,7 @@
 <div id="content">
 
 
-<div id="page-heading"><h1>{% if form=='edit' %}Edytuj{% else %}Dodaj{% endif %} pozycję</h1></div>
+<div id="page-heading"><h1>{{site.name}}</h1></div>
 
 
 <table border="0" width="100%" cellpadding="0" cellspacing="0" id="content-table">
@@ -35,33 +35,6 @@
        
        
         <table border="0" cellpadding="0" cellspacing="0"  id="id-form">
-                <tr>
-                    <th valign="top">Brak kategorii nadrzędnej:</th>
-                    <td><input type="checkbox" name="isCat" id="isCat" value="1" {% if site.category==0 %}checked{% endif %}/></td>
-                    <td></td>
-                </tr>
-                <tr id="pick-cat">
-                    <th valign="top">Wybierz kat. nadrzędną:</th>
-                    <td>                      
-                        <div class="control-group">
-                            <select id="selectError" data-rel="chosen" name="category_id">
-                                    {% for category in categories %}
-                                    <option value="{{ category.site_id }}" {% if category.site_id==site.category %} selected {% endif %} >{{ category.name }}</option>
-                                    {% endfor %}
-                            </select>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <th valign="top">Nazwa:</th>
-                    <td><input type="text" name="name" class="inp-form" value="{{site.name}}"/></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <th valign="top">Pozycja:</th>
-                    <td><input type="text" name="pos" class="inp-form" value="{{site.pos}}"/></td>
-                    <td></td>
-                </tr>
                 <tr>
                     <th valign="top">Treść:</th>
                     <td>
