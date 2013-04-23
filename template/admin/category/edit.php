@@ -46,6 +46,18 @@
                     <td></td>
                 </tr>	
                 <tr>
+                <tr>
+                    <th valign="top">Obrazek:</th>
+                    <td>
+                        <img src="/public/img/{% if category.img is not empty %}categories/thumbs/{{ category.img }}{% else %}no_thumb.jpg{% endif %}" >
+                        <input type="hidden" name="img" class="inp-form" value="{{category.img}}"/>
+                    </td>
+                    <td style="display: block"><a href="#" title="Pliki 2MB, jpeg, png, gif." id="upload-file-enable" class="btn btn-danger">Wybierz nowy obrazek</a></td>
+                </tr>
+                <tr id="upload-file">
+                    <th valign="top">Wybierz obrazek:</th>
+                    <td><input type="file" name="file" class="file_1" disabled="disabled"/></td>
+                </tr>
                     <th>&nbsp;</th>
                     <td valign="top">
                             <button type="submit" class="btn btn-primary" >Zapisz</button>

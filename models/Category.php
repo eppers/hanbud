@@ -12,6 +12,8 @@ class Category extends Model{
     public static $_table = 'categories';
     public static $_id_column = 'cat_id';
     
+    public static $_workspace = './public/img/categories/';
+    
     public function subcategories() {
         return $this->has_many('Subcategory', 'cat_id'); // Note we use the model name literally - not a pluralised version
     }

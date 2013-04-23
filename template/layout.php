@@ -24,7 +24,7 @@
 
 			<nav>
 				<ul class="main-menu">
-					<li><a href="/home" rel="menu1">Strona główna</a></li>
+					<li><a href="/" rel="menu1">Strona główna</a></li>
 					<li><a href="/oferta" rel="menu2">Oferta</a></li>
 					<li><a href="/o-firmie" rel="menu3">O firmie</a></li>
 					<li><a href="" rel="menu4">Allegro</a></li>

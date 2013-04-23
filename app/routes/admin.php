@@ -2,7 +2,9 @@
  
 /*
  * TODO: obrazek dodać w przypadku braku loga producenta (subkategorie)
- * 
+ * Zarzadzanie zdjeciami w ofercie ( na podstawie ogrodow )
+ * Strona glowna wyswietla kategorie, poprawione wyswietlanie produktow w liscie
+ * Zarzadanie obrazkami kategorii w PA  
  * 
  */
 
@@ -16,7 +18,7 @@ $app->get('/admin/', function () use ($app) {
  */
 
 $app->get('/admin/catalog/category/all', function () use ($admin) {
-    $categories=Model::factory('Category')->find_many();
+    $categories=Model::factory('Category')->order_by_asc('pos')->find_many();
     $admin->render('/category/list.php',array('categories'=>$categories));
     
     $_SESSION['msg'] = '';
@@ -38,13 +40,35 @@ $app->post('/admin/catalog/category/add', function () use ($admin) {
     $category = Model::factory('Category')->create();
     $category->name   = $admin->app->request()->post('name');
     $category->pos  = $admin->app->request()->post('pos');
-    $category->save();
+    
+         if (isset($_FILES['file'])) {
 
-    $_SESSION['status']='0';
-    $_SESSION['msg']='Kategoria została wyedytowana poprawnie';
+            $error = Image::setImage($_FILES, $category::$_workspace, true, array('width'=>250, 'height'=>112));
+
+            if($error['status']==1) {
+
+                    $admin->render('/category/edit.php', array('category'=>$category, 'form'=>'add', 'error'=>$error));
+                exit();
+            } else {
+
+            $category->img  = $error['uploaded_file'];
+            $category->save();
+            $_SESSION['status']='0';
+            $_SESSION['msg']='Kategoria została dodana pomyślnie';
+
+            Menu::generate();
+            
+            $admin->app->redirect('/admin/catalog/category/all');
+            }
+
+        } else {
+
+        $error['status']='1';
+        $error['msg']='Kategoria nie została utworzona';
         
-        
-    $admin->app->redirect('/admin/catalog/category/all');
+        $admin->render('/category/edit.php', array('category'=>$category, 'form'=>'add', 'error'=>$error));
+        }
+    
     
 });
 
@@ -68,53 +92,82 @@ $app->post('/admin/catalog/category/edit/:id', function ($id) use ($admin) {
     $category=Model::factory('Category')->find_one($id);
     
     if($category instanceof Category) {
-        
+
         $category->name   = $admin->app->request()->post('name');
         $category->pos  = $admin->app->request()->post('pos');
-        $category->save();
+    
+        if (isset($_FILES['file'])) {
 
+            $error = Image::setImage($_FILES, $category::$_workspace, true, array('width'=>250, 'height'=>112));
+
+            if($error['status']==1) {
+
+                    $admin->render('/category/edit.php', array('category'=>$category, 'form'=>'edit', 'error'=>$error));
+                exit();
+            } else {
+
+            $category->img  = $error['uploaded_file'];
+
+            }
+
+        } else {
+        
+        $category->img  = $admin->app->request()->post('img');
+
+        }
+        
+        $category->save();
         $_SESSION['status']='0';
-        $_SESSION['msg']='Kategoria została wyedytowana poprawnie';
-        
+        $_SESSION['msg']='Kategoria została dodana pomyślnie';
+
         Menu::generate();
-        
+            
         $admin->app->redirect('/admin/catalog/category/all');
         
-    }
-    else {
-        $_SESSION['status']='1';
-        $_SESSION['msg']='Kategoria nie została wyedytowana. Spróbuj ponownie';
+    } else {
         
-        $admin->render('/category/edit.php', array('category'=>$category));
+        $error['status']='1';
+        $error['msg']='Kategoria nie została wyedytowana';
+        
     }
-  
+
+    $admin->render('/category/edit.php', array('category'=>$category, 'form'=>'edit', 'error'=>$error));
     
 });
 
 /*
  * Category delete
  */
-$app->post('/admin/catalog/category/delete/:id', function ($id) use ($admin) {
+$app->get('/admin/catalog/category/delete/:id', function ($id) use ($admin) {
 
     $category=Model::factory('Category')->find_one($id);
     
     if($category instanceof Category) {
-
-        $category->delete();
-
-        $_SESSION['status']='0';
-        $_SESSION['msg']='Kategoria została skasowana poprawnie';
         
-        Menu::generate();
+        $remove = Image::remove($category->img, $category::$_workspace, true);
+        if($remove) {
+            $category->delete();
+
+            $_SESSION['status']='0';
+            $_SESSION['msg']='Kategoria została skasowana poprawnie';
+          
+            Menu::generate();
+            
+        } else {
+        
+            $_SESSION['status']='1';
+            $_SESSION['msg']=$remove;
+        
+        }
 
     } else {
         
         $_SESSION['status']='1';
-        $_SESSION['msg']='Coś poszło nie tak';
+        $_SESSION['msg']='Coś poszło nie tak. Spróbuj ponownie.';
     }
     
     $admin->app->redirect('/admin/catalog/category/all');
-    
+
 });
 
 
@@ -267,18 +320,16 @@ $app->get('/admin/catalog/producer/delete/:id', function ($id) use ($admin) {
             
             Menu::generate();
             
-            $admin->app->redirect('/admin/catalog/producer/all');
-
         } else {
-            $error['status']='1';
-            $error['msg']=$remove;            
+            $_SESSION['status']='1';
+            $_SESSION['msg']=$remove;            
         }
     } else {
-        $error['status']='1';
-        $error['msg']='Coś poszło nie tak';
+        $_SESSION['status']='1';
+        $_SESSION['msg']='Coś poszło nie tak. Spróbuj ponownie.';
     }
     
-    $admin->render('/subcategory/edit.php',array('form'=>'add', 'error'=>$error));
+    $admin->app->redirect('/admin/catalog/producer/all');
 });
 
 

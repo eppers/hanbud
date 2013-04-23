@@ -10,9 +10,9 @@
                     {% for category in list %}
 			<li>
 				<span class="no">{% if loop.index <= 9 %}0{{loop.index}}{% else %}{{loop.index}}{% endif %}</span>
-				<a href="/katalog/{{link}},{% if category.prod_id %}{{category.prod_id}}{% elseif category.subcat_id  %}{{category.subcat_id}}{% endif %},{{category.name|cleanUrl}}">
+				<a href="/katalog/{{link}},{% if category.prod_id %}{{category.prod_id}}{% elseif category.subcat_id  %}{{category.subcat_id}}{% elseif category.id  %}{{category.id}}{% endif %},{{category.name|cleanUrl}}">
                                     <div class="img-container">
-                                        <img src="/public/img/{% if producer is empty and category.img is not empty %}producers/thumbs/{{ category.img }}{% elseif producer is not empty and category.img is not empty %}products/thumbs/{{ category.img }}{% else %}no_thumb.jpg{% endif %}" alt="{{category.name|cleanUrl}}">
+                                        <img src="{% if workspace is not empty and category.img is not empty%}{{workspace}}/thumbs/{{category.img}}{% else %}/public/img/no_thumb.jpg{% endif %}" alt="{{category.name|cleanUrl}}">
                                     </div>
                                     <strong>{{category.name}}</strong>
                                 </a>

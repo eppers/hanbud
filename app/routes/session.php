@@ -5,17 +5,11 @@
  */
 $app->get('/', function () use ($app) {
 
-    $app->render('home.php');
+    $categories = Model::factory('Category')->order_by_asc('pos')->find_many();
+    $workspace = '/public/img/categories';
+    $app->render('productslist.php', array('rel'=>'menu1', 'list'=>$categories, 'link'=>'category', 'workspace'=>$workspace, 'title'=>'Strona główna'));
 });
 
-
-/**
- * Strona główna
- */
-$app->get('/home', function () use ($app) {
-
-    $app->render('home.php', array('rel'=>'menu1'));
-});
 
 /**
  * Oferta
@@ -23,7 +17,7 @@ $app->get('/home', function () use ($app) {
 $app->get('/oferta', function () use ($app) {
 
     $fotos = Model::factory('Foto')->order_by_asc('pos')->find_many();
-    $app->render('offer.php', array('rel'=>'menu2', 'fotos'=>$fotos));
+    $app->render('offer.php', array('rel'=>'menu2', 'fotos'=>$fotos, 'title'=>'Oferta'));
 });
 
 /**
@@ -31,7 +25,7 @@ $app->get('/oferta', function () use ($app) {
  */
 $app->get('/o-firmie', function () use ($app) {
 
-    $app->render('about.php', array('rel'=>'menu3'));
+    $app->render('about.php', array('rel'=>'menu3', 'title'=>'O firmie'));
 });
 
 /**
@@ -39,7 +33,7 @@ $app->get('/o-firmie', function () use ($app) {
  */
 $app->get('/kontakt', function () use ($app) {
 
-    $app->render('contact.php', array('rel'=>'menu5'));
+    $app->render('contact.php', array('rel'=>'menu5', 'title'=>'Kontakt'));
 });
 /**
  * Katalog
@@ -49,6 +43,8 @@ $app->get('/katalog/:vars', function ($vars) use ($app) {
     $varsArray = explode(',',$vars);
     $type = $varsArray[0]; //category, subcategory, product
     $id = intval($varsArray[1]); //type id
+    
+    $imgPath = '/public/img/';
     
     $cat = array();
     $subcat = array();
@@ -69,6 +65,8 @@ $app->get('/katalog/:vars', function ($vars) use ($app) {
             $link = 'subcategory';
 
             $render = 'productslist';
+            $workspace = $imgPath.'producers';
+            
           } else {
               $app->redirect('/');                   
           }
@@ -94,6 +92,8 @@ $app->get('/katalog/:vars', function ($vars) use ($app) {
             $link = 'product';
 
             $render = 'productslist';
+            $workspace = $imgPath.'products';
+            
           } else {
               $app->redirect('/');              
           }
@@ -122,6 +122,8 @@ $app->get('/katalog/:vars', function ($vars) use ($app) {
             $prod['clearUrl'] = cleanForShortURL($list->name);
 
             $render = 'product';
+            $workspace = $imgPath.'products';
+            
           } else {
             $app->redirect('/');              
           }
@@ -131,10 +133,11 @@ $app->get('/katalog/:vars', function ($vars) use ($app) {
           $render = 'productslist';  
           $list = array();
           $title = '';
+          $workspace = '';
     };
     
     
-    $app->render($render.'.php',array('list'=>$list, 'title'=>$title, 'category'=>$cat ,'producer'=>$subcat, 'product'=>$prod, 'link'=>$link));
+    $app->render($render.'.php',array('list'=>$list, 'title'=>$title, 'category'=>$cat ,'producer'=>$subcat, 'product'=>$prod, 'link'=>$link, 'workspace'=>$workspace));
     
 });
 

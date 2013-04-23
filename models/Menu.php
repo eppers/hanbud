@@ -6,7 +6,7 @@ class Menu {
 
     public static function generate() {
     
-        $categories = Model::factory('Category')->find_many();
+        $categories = Model::factory('Category')->order_by_asc('pos')->find_many();
         
         foreach($categories as $cat) {
             if($cat instanceof Category) {

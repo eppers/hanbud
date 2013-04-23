@@ -40,17 +40,19 @@
 				<tr>
 					<th class="table-header-check"><a id="toggle-all" ></a> </th>
 					<th class="table-header-repeat line-left minwidth-1"><a href="">Nazwa grupy</a></th>
-                                        <th class="table-header-repeat line-left minwidth-1"><a href="">Pozycja grupy</a></th>
-                                        <th class="table-header-options line-left"><a href="">Options</a></th>
+          <th class="table-header-repeat line-left minwidth-1"><a href="">Obrazek</a></th>
+          <th class="table-header-repeat line-left minwidth-1"><a href="">Pozycja grupy</a></th>
+          <th class="table-header-options line-left"><a href="">Opcje</a></th>
 				</tr>
                            {% for category in categories %}
                             <tr {% if loop.index is divisibleby(2) %} class="alternate-row" {% endif %} >
                                     <td><input  type="checkbox"/></td>
                                     <td>{{ category.name }}</td>
+                                    <td><img src="/public/img/{% if category.img is not empty %}categories/thumbs/{{ category.img }}{% else %}no_thumb.jpg{% endif %}"></td>
                                     <td>{{ category.pos }}</td>
                                     <td class="options-width">
-                                    <a href="/admin/catalog/category/edit/{{ category.cat_id }}" title="Edit" class="icon-1 info-tooltip"></a>
-                                    <a href="/admin/catalog/category/delete/{{ category.cat_id }}" title="Delete" class="icon-2 info-tooltip"></a>
+                                    <a href="/admin/catalog/category/edit/{{ category.cat_id }}" title="Edytuj" class="icon-1 info-tooltip"></a>
+                                    <a href="/admin/catalog/category/delete/{{ category.cat_id }}" title="Usuń" class="icon-2 info-tooltip"></a>
                                     </td>
                             </tr>
                             {% else %}  
