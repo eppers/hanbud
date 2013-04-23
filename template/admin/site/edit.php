@@ -31,7 +31,7 @@
             {% include 'error.php' %}
         {% endif %}
 		<!-- start id-form -->
-   <form name="site-form" action="/admin/site/{% if form=='edit' %}edit/{{site.site_id}}{% else %}add{% endif %}" method="post" enctype="multipart/form-data">        
+   <form name="site-form" action="/admin/site/edit/{{site.site_id}}" method="post" enctype="multipart/form-data">        
        
        
         <table border="0" cellpadding="0" cellspacing="0"  id="id-form">

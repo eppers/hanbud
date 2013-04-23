@@ -175,11 +175,11 @@ $(document).pngFix( );
 		<div class="nav">
 		<div class="table">
 		
-		<ul class="select"><li><a href="/admin/strony/view"><b>Strony</b><!--[if IE 7]><!--></a><!--<![endif]-->
+		<ul class="select"><li><a href="/admin/site/all"><b>Strony</b><!--[if IE 7]><!--></a><!--<![endif]-->
 		<!--[if lte IE 6]><table><tr><td><![endif]-->
 		<div class="select_sub">
 			<ul class="sub">
-                                <li><a href="/admin/strony/view">Strona główna</a></li>	
+                                <li><a href="/admin/site/all">Wyświetl wszystkie</a></li>	
 			</ul>
 		</div>
 		<!--[if lte IE 6]></td></tr></table></a><![endif]-->

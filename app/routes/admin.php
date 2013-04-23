@@ -551,7 +551,7 @@ $app->post('/admin/offer/add', function () use ($admin) {
     $foto = Model::factory('Foto')->create();
     $foto->pos   = $admin->app->request()->post('pos');
     $foto->alt  = $admin->app->request()->post('alt');
-    $foto->desc = htmlentities($admin->app->request()->post('desc'), ENT_QUOTES, "UTF-8");
+    $foto->desc = $admin->app->request()->post('desc');
     
     if (isset($_FILES['file'])) {
 
@@ -601,7 +601,7 @@ $app->post('/admin/offer/edit/:id', function ($id) use ($admin) {
     if($foto instanceof Foto) {
     $foto->pos   = $admin->app->request()->post('pos');
     $foto->alt   = $admin->app->request()->post('alt');
-    $foto->desc = htmlentities($admin->app->request()->post('desc'), ENT_QUOTES, "UTF-8");
+    $foto->desc = $admin->app->request()->post('desc');
     
     $foto->save();
 
@@ -660,7 +660,7 @@ $app->get('/admin/site/all', function () use ($admin) {
 /*
  * Edit site
  */
-$app->get('/admin/sites/edit/:id', function ($id) use ($admin) {
+$app->get('/admin/site/edit/:id', function ($id) use ($admin) {
  
     $site=Model::factory('Site')->find_one($id);
     
@@ -671,7 +671,7 @@ $app->get('/admin/sites/edit/:id', function ($id) use ($admin) {
     else $admin->redirect('/admin/site/all');
 });
 
-$app->post('/admin/sites/edit/:id', function ($id) use ($admin) {
+$app->post('/admin/site/edit/:id', function ($id) use ($admin) {
  
     $site=Model::factory('Site')->find_one($id);
     

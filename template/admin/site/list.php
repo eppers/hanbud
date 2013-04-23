@@ -12,10 +12,9 @@
         
 	<!--  start page-heading -->
 	<div id="page-heading">
-		<h1>Pozycje menu</h1>
+		<h1>Strony</h1>
 	</div>
 	<!-- end page-heading -->
-        <a href="/admin/site/add" id="add-program" class="btn btn-large btn-primary">Dodaj nową pozycję</a>
 	<table border="0" width="100%" cellpadding="0" cellspacing="0" id="content-table">
 	<tr>
 		<th rowspan="3" class="sized"><img src="/public/admin/img/shared/side_shadowleft.jpg" width="20" height="300" alt="" /></th>
