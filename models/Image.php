@@ -64,7 +64,7 @@ class Image {
     // Walidacja nazwy pliku (usunięcie niewłaściwych znaków)
             $file_name = preg_replace('/[^'.$valid_chars_regex.']+$/i', '', strtolower(basename($_FILES['file']['name'])));
             if (strlen($file_name) == 0 || strlen($file_name) > $MAX_FILENAME_LENGTH)
-                    throw new Exception('Za długa nazwa pliku.');
+                    throw new Exception('Za długa nazwa pliku. Max 20 znaków.');
 
     // Walidacja rozszerzenia pliku na podstawie tablicy
 
@@ -198,9 +198,9 @@ class Image {
                 if(!unlink($thumbImg)) throw new Exception('Miniatura nie została usunięta');
             }
          }
-     catch (Exception $e) {
-         return $e->getMessage();
-     }
+        catch (Exception $e) {
+           return $e->getMessage();
+        }
          
          return true;
      }

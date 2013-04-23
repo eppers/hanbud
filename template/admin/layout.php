@@ -230,12 +230,12 @@ $(document).pngFix( );
                 
 		<div class="nav-divider">&nbsp;</div>
 		
-		<ul class="select"><li><a href="/admin/galeria/lista"><b>Galeria</b><!--[if IE 7]><!--></a><!--<![endif]-->
+		<ul class="select"><li><a href="/admin/offer/all"><b>Oferta</b><!--[if IE 7]><!--></a><!--<![endif]-->
 		<!--[if lte IE 6]><table><tr><td><![endif]-->
 		<div class="select_sub">
 			<ul class="sub">
-				<li><a href="/admin/galeria/lista">Wyświetl listę</a></li>
-                                <li><a href="/admin/galeria/dodaj">Dodaj zdjęcie</a></li>
+				<li><a href="/admin/offer/all">Wyświetl listę</a></li>
+                                <li><a href="/admin/offer/add">Dodaj pozycję</a></li>
 			</ul>
 		</div>
 		<!--[if lte IE 6]></td></tr></table></a><![endif]-->

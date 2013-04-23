@@ -11,10 +11,10 @@
         {% endif %}
 	<!--  start page-heading -->
 	<div id="page-heading">
-		<h1>Zdjęcia</h1>
+		<h1>Oferta</h1>
 	</div>
 	<!-- end page-heading -->
-        <a href="/admin/foto/add" id="add-program" class="btn btn-large btn-primary">Dodaj zdjęcie</a>
+        <a href="/admin/offer/add" id="add-program" class="btn btn-large btn-primary">Dodaj pozycję</a>
 	<table border="0" width="100%" cellpadding="0" cellspacing="0" id="content-table">
 	<tr>
 		<th rowspan="3" class="sized"><img src="/public/admin/img/shared/side_shadowleft.jpg" width="20" height="300" alt="" /></th>
@@ -52,12 +52,12 @@
                                     <td>{{ foto.alt }}</td>
                                     <td>{{ foto.pos }}</td>                                    
                                     <td class="options-width">
-                                    <a href="/admin/foto/edit/{{ foto.foto_id }}" title="Edit" class="icon-1 info-tooltip"></a>
-                                    <a href="/admin/foto/delete/{{ foto.foto_id }}" title="Usuń" class="icon-2 info-tooltip"></a>
+                                    <a href="/admin/offer/edit/{{ foto.foto_id }}" title="Edit" class="icon-1 info-tooltip"></a>
+                                    <a href="/admin/offer/delete/{{ foto.foto_id }}" title="Usuń" class="icon-2 info-tooltip"></a>
                                     </td>
                             </tr>
                             {% else %}  
-                                <tr><td><p>Brak zdjęć</p></td></tr>
+                                <tr><td colspan="6"><p>Brak pozycji</p></td></tr>
                         {% endfor %}
 
 				

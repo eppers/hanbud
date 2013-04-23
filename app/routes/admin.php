@@ -528,7 +528,7 @@ $app->get('/admin/catalog/product/delete/:id', function ($id) use ($admin) {
  * Oferta - Gallery ......................................................................
  */
 
-$app->get('/admin/foto/all', function () use ($admin) {
+$app->get('/admin/offer/all', function () use ($admin) {
     $fotos=Model::factory('Foto')->order_by_asc('pos')->find_many();
     $admin->render('/foto/list.php',array('fotos'=>$fotos));
     
@@ -539,14 +539,14 @@ $app->get('/admin/foto/all', function () use ($admin) {
  * Add foto
  */
 
-$app->get('/admin/foto/add', function () use ($admin) {
+$app->get('/admin/offer/add', function () use ($admin) {
  
     $admin->render('/foto/edit.php',array('form'=>'add'));
 
     
 });
 
-$app->post('/admin/foto/add', function () use ($admin) {
+$app->post('/admin/offer/add', function () use ($admin) {
    
     $foto = Model::factory('Foto')->create();
     $foto->pos   = $admin->app->request()->post('pos');
@@ -555,7 +555,7 @@ $app->post('/admin/foto/add', function () use ($admin) {
     
     if (isset($_FILES['file'])) {
 
-        $error = Image::setImage($_FILES,$foto::$_workspace,true);
+        $error = Image::setImage($_FILES,$foto::$_workspace,true,array('width'=>800, 'height'=>800));
 
         if($error['status']==1) {
                 $admin->render('/foto/edit.php', array('foto'=>$foto, 'form'=>'add', 'error'=>$error));
@@ -566,9 +566,9 @@ $app->post('/admin/foto/add', function () use ($admin) {
         $foto->img  = $error['uploaded_file'];
         $foto->save();
         $_SESSION['status']='0';
-        $_SESSION['msg']='Zdjęcie została dodana pomyślnie';
+        $_SESSION['msg']='Pozycja została dodana pomyślnie';
     
-        $admin->app->redirect('/admin/foto/all');
+        $admin->app->redirect('/admin/offer/all');
     
         
         }
@@ -576,7 +576,7 @@ $app->post('/admin/foto/add', function () use ($admin) {
     } else {
 
     $error['status']='1';
-    $error['msg']='Zdjęcie nie została dodane';
+    $error['msg']='Pozycja nie została dodana. Spróbuj ponownie.';
 
     }
     
@@ -588,13 +588,13 @@ $app->post('/admin/foto/add', function () use ($admin) {
 /*
  * Edit foto
  */
-$app->get('/admin/foto/edit/:id', function ($id) use ($admin) {
+$app->get('/admin/offer/edit/:id', function ($id) use ($admin) {
     $foto=Model::factory('Foto')->find_one($id);
     
     $admin->render('/foto/edit.php',array('foto'=>$foto, 'form'=>'edit'));
 });
 
-$app->post('/admin/foto/edit/:id', function ($id) use ($admin) {
+$app->post('/admin/offer/edit/:id', function ($id) use ($admin) {
 
     $foto=Model::factory('Foto')->find_one($id);
     
@@ -608,7 +608,7 @@ $app->post('/admin/foto/edit/:id', function ($id) use ($admin) {
         $_SESSION['status']='0';
         $_SESSION['msg']='Zdjęcie została wyedytowane poprawnie';
     
-        $admin->app->redirect('/admin/foto/all');
+        $admin->app->redirect('/admin/offer/all');
             
         
     } else {
@@ -622,7 +622,7 @@ $app->post('/admin/foto/edit/:id', function ($id) use ($admin) {
 /*
  * Delete foto
  */
-$app->get('/admin/foto/delete/:id', function ($id) use ($admin) {
+$app->get('/admin/offer/delete/:id', function ($id) use ($admin) {
     $foto=Model::factory('Foto')->find_one($id);
     
     if($foto instanceof Foto) {
@@ -643,7 +643,7 @@ $app->get('/admin/foto/delete/:id', function ($id) use ($admin) {
         $_SESSION['status']='1';
         $_SESSION['msg']='Coś poszło nie tak';
     }
-    $admin->app->redirect('/admin/foto/all');
+    $admin->app->redirect('/admin/offer/all');
 });
 
 

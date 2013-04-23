@@ -10,6 +10,7 @@
 	<meta name="description" content="" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<link rel="stylesheet" media="screen, projection" href="/public/css/screen.css" />
+        <link rel="stylesheet" media="screen, projection" href="/public/css/lightbox.css" />
 	<script src="/public/js/vendor/modernizr-2.6.2.min.js"></script>
 </head>
 <body id="top" onload="mapaStart()">
